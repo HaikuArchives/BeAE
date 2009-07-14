@@ -93,7 +93,7 @@ class Preferences{
 	float	filter_room_delay, filter_room_gain, filter_room_damping;
 
 	int32	filter_bassboost_frequency, filter_bassboost_boost;
-//	int32	filter_limiter_value, filter_limiter_mix;
+	int32	filter_limiter_value, filter_limiter_mix;
 	int32	filter_amplifier_value;
 
 	bool	filter_compressor_rms;

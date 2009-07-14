@@ -34,12 +34,13 @@
 
 #include "Globals.h"
 #include "RealtimeFilter.h"
-#include "AmplifierFilter.h"
+//#include "AmplifierFilter.h"
+#include "LimiterFilter.h"
 
 /*******************************************************
 *   
 *******************************************************/
-AmplifierFilter::AmplifierFilter(bool b) : RealtimeFilter(Language.get("AMPLIFIER"), b)
+LimiterFilter::LimiterFilter(bool b) : RealtimeFilter(Language.get("LIMITFILTER"), b)
 {
 
 }
@@ -47,7 +48,7 @@ AmplifierFilter::AmplifierFilter(bool b) : RealtimeFilter(Language.get("AMPLIFIE
 /*******************************************************
 *   
 *******************************************************/
-BView *AmplifierFilter::ConfigView()
+BView *LimiterFilter::ConfigView()
 {
 	BRect r(0,0,200,100);
 
@@ -68,7 +69,7 @@ BView *AmplifierFilter::ConfigView()
 	return view;
 }
 
-void AmplifierFilter::UpdateValues()
+void LimiterFilter::UpdateValues()
 {
 	Prefs.filter_limiter_value = value->Value();
 	Prefs.filter_limiter_mix = mix->Value();
@@ -77,7 +78,7 @@ void AmplifierFilter::UpdateValues()
 /*******************************************************
 *   Init & exit
 *******************************************************/
-bool AmplifierFilter::InitFilter(float f, int32 c)
+bool LimiterFilter::InitFilter(float f, int32 c)
 {
 	RealtimeFilter::InitFilter(f, c);
 
@@ -94,7 +95,7 @@ bool AmplifierFilter::InitFilter(float f, int32 c)
 	return true;
 }
 
-void AmplifierFilter::DeAllocate()
+void LimiterFilter::DeAllocate()
 {
 //	delete[] delay_buffer;
 }
@@ -102,7 +103,7 @@ void AmplifierFilter::DeAllocate()
 /*******************************************************
 *   
 *******************************************************/
-void AmplifierFilter::FilterBuffer(float *buffer, size_t size)
+void LimiterFilter::FilterBuffer(float *buffer, size_t size)
 {
 	float tmp, tmp2, lim;
 	float mix = Prefs.filter_limiter_mix/100.0;

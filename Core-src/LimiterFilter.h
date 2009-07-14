@@ -26,8 +26,8 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef AMP_FILTER_H
-#define AMP_FILTER_H
+#ifndef LIMITER_FILTER_H
+#define LIMITER_FILTER_H
 
 class LimiterFilter : public RealtimeFilter {
   public:
@@ -43,7 +43,8 @@ class LimiterFilter : public RealtimeFilter {
 	float *delay_buffer;
 	float old_left, old_right;
 	int32 buffer_size, pBuffer;
-	SpinSlider *value, *mix;
+	SpinSlider *value;
+	SpinSlider *mix;
 };
 
 #endif

@@ -53,13 +53,13 @@ enum {FADE_IN, FADE_OUT, PAUSE};
 #define FADE_STEPS	20
 #define PAUSE_STEPS	30
 
-const char *version = "Version 1.0 August 2006";
+const char *version = "Version 1.1 July 2009";
 
 static char *txt[] = {
-"BeAE - Audio Editing for the BeOS",
+"BeAE - Audio Editing for the BeOS, Haiku and Zeta",
 "Created by Frans van Nispen (frans@xentronix.com)",
-"© 2000 Xentronix Software http://www.xentronix.com"
-"Preference & Language classes: John 'YNOP' Talton (ynop@beunited.org) ,",
+"© 2000 Xentronix Software http://www.xentronix.com",
+"Preference & Language classes: John 'YNOP' Talton,",
 "Special thanks goes to:",
 "Nicholas Blachford, for helping me with the filters and effects,",
 "Axel Dörfler & David McPaul for helping out with the new MediaKit.",
@@ -69,7 +69,7 @@ static char *txt[] = {
 "Sergei Dolgov - Russian translation,",
 "Carlos Alberto G-M Costa - Spanish translation,",
 "Zsolt Bihari - Hungarian translation,",
-"Bruno G. Albuquerque - Prtuguese translation,",
+"Bruno G. Albuquerque - Portuguese translation,",
 "Eugenia Loli-Queru & the members of our beta-program.",
 
 NULL};
@@ -97,7 +97,7 @@ void AboutView::Draw(BRect rect)
 	SetLowColor(255, 255, 255);
 	SetHighColor(0,0,0);
 	DrawString(version, BPoint(rect.right - font.StringWidth(version)-5, rect.bottom-5)); 
-//	DrawString("www.Xentronix.com", BPoint(rect.left+5, rect.bottom-5)); 
+	DrawString("http://developer.berlios.de/projects/beae", BPoint(rect.left+5, rect.bottom-5)); 
 	
 	SetLowColor(224,238,252);
 	SetHighColor(r,g,b);

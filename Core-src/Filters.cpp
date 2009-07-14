@@ -27,6 +27,7 @@
 */
 
 #include <stdio.h>
+#include <File.h>
 
 #include "Globals.h"
 #include "Filters.h"
