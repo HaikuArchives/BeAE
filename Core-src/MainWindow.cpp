@@ -60,7 +60,7 @@ cookie_record play_cookie;
 
 // URL to the homepage/Tutorials/others
 //char *TUTORIALS_URL = "http://www.xentronix.com/module.php?mod=document";
-//char *HOMEPAGE_URL = "http://www.xentronix.com/";
+char *HOMEPAGE_URL = "http://developer.berlios.de/projects/beae/";
 
 
 class MyMenuBar : public BMenuBar{
@@ -607,9 +607,9 @@ void MainWindow::AddMenu()
 	menu = new BMenu(Language.get("HELP_MENU"));
 	mainMenuBar->AddItem(menu);
 	menu->AddItem(menuItem = new BMenuItem(Language.get("HELP"), new BMessage(HELP), KeyBind.GetKey("HELP"), KeyBind.GetMod("HELP")));
-	menu->AddSeparatorItem();
-//	menu->AddItem(menuItem = new BMenuItem(Language.get("HOMEPAGE"), new BMessage(HOMEPAGE), KeyBind.GetKey("HOMEPAGE"), KeyBind.GetMod("HOMEPAGE")));
-//	menu->AddItem(menuItem = new BMenuItem(Language.get("TUTORIALS"), new BMessage(TUTORIALS), KeyBind.GetKey("TUTORIALS"), KeyBind.GetMod("TUTORIALS")));
+//	menu->AddSeparatorItem();
+	menu->AddItem(menuItem = new BMenuItem(Language.get("HISTORY"), new BMessage(HISTORY), KeyBind.GetKey("HISTORY"), KeyBind.GetMod("HISTORY")));
+	menu->AddItem(menuItem = new BMenuItem(Language.get("HOMEPAGE"), new BMessage(HOMEPAGE), KeyBind.GetKey("HOMEPAGE"), KeyBind.GetMod("HOMEPAGE")));
 	menu->AddSeparatorItem();
 	menu->AddItem(menuItem = new BMenuItem(Language.get("ABOUT"), new BMessage(ABOUT), KeyBind.GetKey("ABOUT"), KeyBind.GetMod("ABOUT")));
 
@@ -1018,7 +1018,7 @@ void MainWindow::MessageReceived(BMessage *message)
 		BEntry entry(&ai.ref);
 		entry.GetPath(&path);
 		path.GetParent(&path);
-		path.Append("Help/index.html");
+		path.Append("Help/help.html");
 		char *help = new char[strlen(path.Path())+1];
 		sprintf(help, path.Path());
 		be_roster->Launch("text/html",1, &help);
@@ -1037,13 +1037,24 @@ void MainWindow::MessageReceived(BMessage *message)
 		be_roster->Launch(info.signature, new BMessage(B_PASTE));
 	}	break;
 		
-//	case HOMEPAGE:
-//		be_roster->Launch("text/html",1, &HOMEPAGE_URL);
-//		break;
+	case HISTORY:
+{
+		BPath path;
+		app_info ai;
+		be_app->GetAppInfo(&ai);
+		BEntry entry(&ai.ref);
+		entry.GetPath(&path);
+		path.GetParent(&path);
+		path.Append("Help/history.html");
+		char *history = new char[strlen(path.Path())+1];
+		sprintf(history, path.Path());
+		be_roster->Launch("text/html",1, &history);
+		delete history;
+}		break;
 		
-//	case TUTORIALS:
-//		be_roster->Launch("text/html",1, &TUTORIALS_URL);
-//		break;
+	case HOMEPAGE:
+		be_roster->Launch("text/html",1, &HOMEPAGE_URL);
+		break;
 		
 	case PREFERENCES:
 		if(Pool.PrefWin != NULL){

@@ -106,6 +106,7 @@ enum {MONO=1, STEREO=2};
 #define HELP				'help'
 #define ABOUT				'bout'
 #define HOMEPAGE			'hmep'
+#define HISTORY				'hsty'
 #define TUTORIALS			'tuts'
 
 #define ZERO_IN				'zrIn'
