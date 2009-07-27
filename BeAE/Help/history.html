@@ -1,238 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
 <head>
-<title>Welcome to BeAE</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta name="robots" content="all" />
+	<title>BeAE - Version History</title>
+
+<style type="text/css">
+body {
+    	font-size: 0.9em;
+	line-height: 1.5;
+	margin: 30px; 
+	font-family: "DejaVu Sans",Arial,Helvetica,sans-serif;
+}
+td.table-heading {
+	color: #787878;
+	border-bottom: solid thin #454545;
+	border-spacing: 10px;
+}
+td.table-data {
+	background-color: #efefef;
+	padding: 10px;
+}
+</style>
 </head>
-<body bgcolor="#6897C3" text="#000000" link="#2222aa">
-<center>
-</center>
-<hr noshade>
-<table border="0" cellpadding="2" cellspacing="0">
- <tr bgcolor="#326698">
-  <td><img src="icon.png"></td>
-  <td><font size="+3" color="#ffffff">BeAE History</font></td>
- </tr>
- <tr>
-  <td><b>Original Author: Frans van Nispen</td> 
- </tr> 
- <tr>
-  <td><b>Version: 1.1</td> 
- </tr> 
- <tr>
-  <td colspan="2"><hr noshade align="left"></td>
- </tr>
+
+<body>
+
+<table cellspacing="15"><tr><td><img width="64" height="64" src="images/beae-icon.png" alt="BeAE Icon" /></td>
+<td><span style="font-size: 1.8em"><b>BeAE</b></span><br />
+<span style="font-size: 1.3em">Version History</span><br />
+<span style="font-size: 1.0em; color: #787878"><i>Original Author: Frans van Nispen</i></span><br /></td></tr>
 </table>
-<BR>
-=======<BR>
-<BR>
-- 2006 - Removed references to the original name, renamed to BeAE and posted on Berlios.de
-<BR>
-- 2003 - Released as open source<BR>
-<BR>
-From BeGroovy: 
-"In what ultimately amounts to a mixed fate, Sample Studio by Xentronix has been open sourced, 
-after community members paid a $250 source release fee. This was done because Xentronix no 
-longer has time to continue work on the product, and didn’t want it to just become abandonware.
-So, the downside is that Sample Studio, a potentially great audio editing app for BeOS, has seen 
-it’s core developers stop development. The upside is that it is now free software, so it has 
-potential to grow quickly if new developers pick it up. "
-<BR>
-=======<BR>
-Beta 2.0<BR>
-<BR>
-Fixed<BR>
-=======<BR>
-- Play cursor now draws ok while changing the selection<BR>
-- when zoomed in on 1 sample, you now can zoom out again<BR>
-- Clear buffers on bypass filter<BR>
-- Repeat last filter<BR>
-- Link in tutorials now like to documentation online<BR>
-- Keyboard navigation now stays working<BR>
-- Crashes on Cut removed<BR>
-- Copy/pase speed boost<BR>
-<BR>
-Added<BR>
-=======<BR>
-- Start new instances with 'New'<BR>
-- Entering of numbers on pointer view<BR>
-- Context menu on PointerView<BR>
-- changable temporary directory<BR>
-- Files can be dropped on an empty window to load<BR>
-- A drop of a file when there already is one loaded<BR>
-  will open a new instance and load the data<BR>
-- Added zoom functions to sampleview popup<BR>
-- Added Play and pause to context menu<BR>
-- Paste mono/stereo into a single channel of a stereo file<BR>
-- Copy/Paster between instances<BR>
-- Paste to new<BR>
-- Added drag and drop of selections. This is done by a<BR>
-  copy / paste. To avoid dragging without intention, the<BR>
-  threshold is 4 pixels. It can also be turned off in the<BR>
-  preferences.<BR>
-- CTRL-drag does move the selection<BR>
-<BR>
-<BR>
-Alpha 2.3<BR>
------------------<BR>
-<BR>
-Fixed<BR>
-=======<BR>
-- Progress Window not zoomable<BR>
-- Lockups that happened when analyzers got closed in a certain order<BR>
-- Amount to keep free in the preferences was not saved<BR>
-- The peak-value in the preferences was not saved<BR>
-- Fixed lockup problems when trying to copy/cut or saving undo-data<BR>
-  when there is not enough diskspace free<BR>
-- Drawing of lines in sample-edit mode<BR>
-- Index view pointer follows while playing<BR>
-- Better refreshing of the pointer views<BR>
-- Amplifier negative values not clipped<BR>
-- Filtering of one channel in a stereo-file works again<BR>
-- Bug in Rounding macro<BR>
-- the 20/40/60.. will sometimes have rounding errors<BR>
-- Antialiasing of the text in the rulers fixed<BR>
-- Index slider sometimes followed the mouse even after mouse-up<BR>
-<BR>
-Added<BR>
-=======<BR>
-- PopUp menu on pointers to toggle time/samples<BR>
-- New drawroutines with gradient blending<BR>
-- Display follows play-cursor (optional in preferences)<BR>
-- Extended the selection system to be able to select just one<BR>
-  channel in a stereo-file by selecting in the top ro bottom<BR>
-  borderd of the sample<BR>
-- Start an dend of selection pointers are draggable to extend selection<BR>
-- New darwroutines for the indexview<BR>
-- Playpointer in indexview<BR>
-<BR><BR>
-Alpha 2.0<BR>
------------------<BR>
-<BR>
-Fixed<BR>
-=======<BR>
-- Progress Window not zoomable<BR>
-- Lockups that happened when analyzers got closed in a certain order<BR>
-- Amount to keep free in the preferences was not saved<BR>
-- The peak-value in the preferences was not saved<BR>
-- Fixed lockup problems when trying to copy/cut or saving undo-data<BR>
-  when there is not enough diskspace free<BR>
-- Drawing of lines in sample-edit mode<BR>
-- Index view pointer follows while playing<BR>
-- Better refreshing of the pointer views<BR>
-- Amplifier negative values not clipped<BR>
-- Filtering of one channel in a stereo-file works again<BR>
-<BR>
-Added<BR>
-=======<BR>
-- PopUp menu on pointers to toggle time/samples<BR>
-- New drawroutines with gradient blending<BR>
-- Display follows play-cursor<BR>
-- Extended the selection system to be able to select just one<BR>
-  channel in a stereo-file by selecting in the top ro bottom<BR>
-  borderd of the sample<BR>
-- Start an dend of selection pointers are draggable to extend selection<BR>
-<BR><BR><BR>
-Beta 1.5<BR>
-<BR>
-Fixed<BR>
-=======<BR>
-- SampleView peakView drawing<BR>
-- SpectrumAnalyzer resizable<BR>
-- Replay frequency went wrong on some systems<BR>
-- Odd vertical line that displays on new loaded file removed<BR>
-- Frame frequency of updating analyzers and pointers<BR>
-- The VU meters now reflect the output after the relatime effects<BR>
-<BR>
-Added<BR>
-=======<BR>
-- Skeleton for plug-in effects / filters<BR>
-- Multiple effects / filters open at once<BR>
-- Filters able to run realtime or not (developer issue)<BR>
-- Filters will be enabled / disabled by the sample-types it supports<BR>
-- Bypass function on realtime filters<BR>
-- BaseClass for filters implemented, so plug-ins will be possible<BR>
-- PLayTool added. Left-mouse starts playing at mouseposition, right-mouse<BR>
-  does same but places pointer on last played position<BR>
-- Jogg Tool<BR>
-- BassBoost<BR>
-- Swap Channels<BR>
-- compressor<BR>
-- Amplifier<BR>
-<BR>
-Beta 1.2<BR>
----------<BR>
-<BR>
-Fixed<BR>
-=======<BR>
-- Trails of the play-pointer<BR>
-- Undo Bug in larger blocks<BR>
-- Save code<BR>
-- ALT-Q checks for save-conditions and saves settings too<BR>
-- Changed the IndexView to an avaraged view to show envelope of sample<BR>
-- Changed IndexView to use peak-file<BR>
-- Changed the fonts in the LCD's<BR>
-<BR>
-Added<BR>
-=======<BR>
-- RealTime Effects<BR>
-- Zero Crossings<BR>
-- SHIFT-LEFT as same as Right-mouse in the sample-view<BR>
-- CTRL-SHIFT-X, Copy & Silence<BR>
-- CTRL-U, Unselect all<BR>
-- Add Clear to the Edit menu: Delete, ALT-B: Silence<BR>
-- if step in SampleView<1: Iterate and add points to edit<BR>
-- Catagories to the KeyBindings + extra bindings<BR>
-- LEFT / RIGTH arrows to move display<BR>
-- Cursor:<BR>
-	home key:  move cursor to the start of the visible area<BR>
-	end key:   move cursor to the end of the visible area<BR>
-	SHIFT home key:   move cursor to the start of the file  (and change the <BR>
-	view to compensate)<BR>
-	SHIFT end key:  move cursor to the end of the file  (and change the view <BR>
-	to compensate)<BR>
-- Space to toggle play/stop<BR>
-- Added lastplay-pointer to full-view<BR>
-- Move cursor to last play-position (RETURN-key, S-key)<BR>
-- New drawing with cached peaks<BR>
-- When zoomed in, all changes to points and lines for edit<BR>
-- Painting in the samples when zoomed in a lot<BR>
-- Sample Scope<BR>
-<BR>
-<BR>
-Info on Alpha 2<BR>
-------------------<BR>
-<BR>
-Bugs Fixed<BR>
-===========<BR>
-<BR>
-- Loop at end<BR>
-- Peak settings bug<BR>
-- Color Schemes redrawing when nothing is selected<BR>
-- spell errors<BR>
-- Text in save-panel adjust to save selection / save file<BR>
-- Reset FactorySettings: Language reset<BR>
-- bug in undo / clipboard with large files<BR>
-- Save crash when codec does not support wave settings<BR>
-- Bug in stereo delay<BR>
-- Corrected end of delay<BR>
-- Index view drawing on left size when zoomed in and move to left<BR>
-<BR>
-Added<BR>
-=======<BR>
-- Key Bindings<BR>
-- Normalize GUI<BR>
-- Filter Repeat with last settings<BR>
-- Resample<BR>
-- mouse wheel roll & track zoom navigation<BR>
-- Zero Crossings<BR>
-- Room Effect<BR>
-- Delay GUI<BR>
-- Reverb<BR>
-<BR>
-<BR>
-<br clear="all">
-<hr noshade>
-<center>
-Copyright &copy; 2002 Xentronix. All rights reserved.
-</center>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Version 1.1</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2">
+<ul>
+<li>2006 - Removed references to the original name, renamed to BeAE and posted on Berlios.de</li>
+<li>2003 - Released as open source</li>
+</ul>
+<p>From <a href="http://www.begroovy.com/wordpress/?p=367">BeGroovy</a>: "In what ultimately amounts to a mixed fate, Sample Studio by <a href="http://www.xentronix.com/">Xentronix</a> has been open sourced, after community members paid a $250 source release fee. This was done because Xentronix no longer has time to continue work on the product, and didn't want it to just become abandonware.<br />
+So, the downside is that Sample Studio, a potentially great audio editing app for BeOS, has seen its core developers stop development. The upside is that it is now free software, so it has potential to grow quickly if new developers pick it up."</p><p></p></td></tr>
+</table>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Beta 2.0</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2"><p><i>Fixed:</i></p>
+<ul type="square">
+<li>Play cursor now draws ok while changing the selection</li>
+<li>When zoomed in on 1 sample, you now can zoom out again</li>
+<li>Clear buffers on bypass filter</li>
+<li>Repeat last filter</li>
+<li>Link in tutorials now like to documentation online</li>
+<li>Keyboard navigation now stays working</li>
+<li>Crashes on Cut removed</li>
+<li>Copy/pase speed boost</li>
+</ul>
+<tr><td class="table-data" colspan="2"><p><i>Added:</i></p>
+<ul>
+<li>Start new instances with 'New'</li>
+<li>Entering of numbers on pointer view</li>
+<li>Context menu on PointerView</li>
+<li>Changable temporary directory</li>
+<li>Files can be dropped on an empty window to load</li>
+<li>A drop of a file when there already is one loaded will open a new instance and load the data</li>
+<li>Added zoom functions to sampleview popup</li>
+<li>Added Play and pause to context menu</li>
+<li>Paste mono/stereo into a single channel of a stereo file</li>
+<li>Copy&Paste between instances</li>
+<li>Paste to new</li>
+<li>Added drag and drop of selections. This is done by a copy&paste. To avoid dragging without intention, the threshold is 4 pixels. It can also be turned off in the preferences.</li>
+<li>CTRL-drag does move the selection</li>
+</ul></td></tr>
+</table>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Alpha 2.3</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2"><p><i>Fixed:</i></p>
+<ul type="square">
+<li>Progress Window not zoomable
+<li>Lockups that happened when analyzers got closed in a certain order</li>
+<li>Amount to keep free in the preferences was not saved</li>
+<li>The peak-value in the preferences was not saved</li>
+<li>Fixed lockup problems when trying to copy/cut or saving undo-data when there is not enough free diskspace</li>
+<li>Drawing of lines in sample-edit mode</li>
+<li>Index view pointer follows while playing</li>
+<li>Better refreshing of the pointer views</li>
+<li>Amplifier negative values not clipped</li>
+<li>Filtering of one channel in a stereo-file works again</li>
+<li>Bug in Rounding macro</li>
+<li>The 20/40/60.. will sometimes have rounding errors</li>
+<li>Antialiasing of the text in the rulers fixed</li>
+<li>Index slider sometimes followed the mouse even after mouse-up</li>
+</ul>
+<tr><td class="table-data" colspan="2"><p><i>Added:</i></p>
+<ul>
+<li>PopUp menu on pointers to toggle time/samples</li>
+<li>New drawroutines with gradient blending</li>
+<li>Display follows play-cursor (optional in preferences)</li>
+<li>Extended the selection system to be able to select just one channel in a stereo-file by selecting in the top or bottom border of the sample</li>
+<li>Start an dend of selection pointers are draggable to extend selection</li>
+<li>New draw routines for the indexview</li>
+<li>Play-pointer in indexview</li>
+</ul></td></tr>
+</table>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Alpha 2.0</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2"><p><i>Fixed:</i></p>
+<ul type="square">
+<li>Progress Window not zoomable</li>
+<li>Lockups that happened when analyzers got closed in a certain order</li>
+<li>Amount to keep free in the preferences was not saved</li>
+<li>The peak-value in the preferences was not saved</li>
+<li>Fixed lockup problems when trying to copy/cut or saving undo-data when there is not enough free diskspace</li>
+<li>Drawing of lines in sample-edit mode</li>
+<li>Index view pointer follows while playing</li>
+<li>Better refreshing of the pointer views</li>
+<li>Amplifier negative values not clipped</li>
+<li>Filtering of one channel in a stereo-file works again</li>
+</ul>
+<tr><td class="table-data" colspan="2"><p><i>Added:</i></p>
+<ul>
+<li>PopUp menu on pointers to toggle time/samples</li>
+<li>New drawroutines with gradient blending</li>
+<li>Display follows play-cursor</li>
+<li>Extended the selection system to be able to select just one channel in a stereo-file by selecting in the top or bottom border of the sample</li>
+<li>Start and end of selection pointers are draggable to extend selection</li>
+</ul></td></tr>
+</table>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Beta 1.5</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2"><p><i>Fixed:</i></p>
+<ul type="square">
+<li>SampleView peakView drawing</li>
+<li>SpectrumAnalyzer resizable</li>
+<li>Replay frequency went wrong on some systems</li>
+<li>Odd vertical line that displays on new loaded file removed</li>
+<li>Frame frequency of updating analyzers and pointers</li>
+<li>The VU meters now reflect the output after the realtime effects</li>
+</ul>
+<tr><td class="table-data" colspan="2"><p><i>Added:</i></p>
+<ul>
+<li>Skeleton for plug-in effects / filters</li>
+<li>Multiple effects / filters open at once</li>
+<li>Filters able to run realtime or not (developer issue)</li>
+<li>Filters will be enabled / disabled by the sample-types it supports</li>
+<li>Bypass function on realtime filters</li>
+<li>BaseClass for filters implemented, so plug-ins will be possible</li>
+<li>PLayTool added. Left-mouse starts playing at mouse position, right-mouse does same but places pointer on last played position</li>
+<li>Jogg Tool</li>
+<li>BassBoost</li>
+<li>Swap Channels</li>
+<li>compressor</li>
+<li>Amplifier</li>
+</ul></td></tr>
+</table>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Beta 1.2</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2"><p><i>Fixed:</i></p>
+<ul type="square">
+<li>Trails of the play-pointer</li>
+<li>Undo Bug in larger blocks</li>
+<li>Save code</li>
+<li>ALT-Q checks for save-conditions and saves settings too</li>
+<li>Changed the IndexView to an averaged view to show envelope of sample</li>
+<li>Changed IndexView to use peak-file</li>
+<li>Changed the fonts in the LCDs</li>
+</ul>
+<tr><td class="table-data" colspan="2"><p><i>Added:</i></p>
+<ul>
+<li>RealTime Effects</li>
+<li>Zero Crossings</li>
+<li>SHIFT+LEFT as same as Right-mouse in the sample-view</li>
+<li>CTRL+SHIFT+X, Copy & Silence</li>
+<li>CTRL+U, Unselect all</li>
+<li>Add Clear to the Edit menu: DEL, ALT+B: Silence</li>
+<li>if step in SampleView < 1: Iterate and add points to edit</li>
+<li>Catagories to the KeyBindings + extra bindings</li>
+<li>LEFT / RIGTH arrows to move display</li>
+<li>Cursor:<br />
+HOME key: move cursor to the start of the visible area<br />
+END key: move cursor to the end of the visible area<br />
+SHIFT+HOME key: move cursor to the start of the file (and change the view to compensate)<br />
+SHIFT+END key: move cursor to the end of the file (and change the view to compensate)</li>
+<li>Space to toggle play/stop</li>
+<li>Added lastplay-pointer to full-view</li>
+<li>Move cursor to last play-position (RETURN key, S key)</li>
+<li>New drawing with cached peaks</li>
+<li>When zoomed in, all changes to points and lines for edit</li>
+<li>Painting in the samples when zoomed in a lot</li>
+<li>Sample Scope</li>
+</ul></td></tr>
+</table>
+<p><br></p>
+
+
+<table summary="release-data" border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="table-heading" align="left"><b>Info on Alpha 2</b></td><td class="table-heading" align="right"><b></b></td></tr>
+<tr><td class="table-data" colspan="2"><p><i>Fixed:</i></p>
+<ul type="square">
+<li>Loop at end</li>
+<li>Peak settings bug</li>
+<li>Color Schemes redrawing when nothing is selected</li>
+<li>Spelling errors</li>
+<li>Text in save-panel adjust to save selection / save file</li>
+<li>Reset FactorySettings: Language reset</li>
+<li>Bug in undo / clipboard with large files</li>
+<li>Save crash when codec does not support wave settings</li>
+<li>Bug in stereo delay</li>
+<li>Corrected end of delay</li>
+<li>Index view drawing on left size when zoomed in and move to left</li>
+</ul>
+<tr><td class="table-data" colspan="2"><p><i>Added:</i></p>
+<ul>
+<li>Key Bindings</li>
+<li>Normalize GUI</li>
+<li>Filter Repeat with last settings</li>
+<li>Resample</li>
+<li>mouse wheel roll & track zoom navigation</li>
+<li>Zero Crossings</li>
+<li>Room Effect</li>
+<li>Delay GUI</li>
+<li>Reverb</li>
+</ul></td></tr>
+</table>
+<p><br></p>
+
+
 </body>
 </html>
+
