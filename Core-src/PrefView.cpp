@@ -52,7 +52,7 @@ PrefView::PrefView(BRect frame):BView(frame, "Prefs view", B_FOLLOW_ALL_SIDES, B
 
 	// add the prefs list at the left
 	BRect r = Bounds();
-	r.right = 110;
+	r.right = 130;
 	r.top += 8;	r.left += 8;
 	r.bottom -= 40;
 	list = new BListView(r,"Prefs list");
@@ -73,7 +73,7 @@ PrefView::PrefView(BRect frame):BView(frame, "Prefs view", B_FOLLOW_ALL_SIDES, B
 
 	r = Bounds();
 	AddChild(new BButton(BRect(r.right-120,r.bottom-32,r.right-8,r.bottom-8), NULL, Language.get("OK"), new BMessage(QUIT)) );
-	AddChild(new BButton(BRect(8,r.bottom-32,120,r.bottom-8), NULL, Language.get("FACTORY"), new BMessage(SET_FACTORY)) );
+	AddChild(new BButton(BRect(8,r.bottom-32,146,r.bottom-8), NULL, Language.get("FACTORY"), new BMessage(SET_FACTORY)) );
 
 	r = configBox->Bounds();
 	r.InsetBy(5,5); r.top += 10;
