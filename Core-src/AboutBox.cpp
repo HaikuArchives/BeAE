@@ -71,6 +71,9 @@ static char *txt[] = {
 "Zsolt Bihari - Hungarian translation,",
 "Bruno G. Albuquerque - Portuguese translation,",
 "Eugenia Loli-Queru & the members of our beta-program.",
+"And those who helped pay the $250 Open Source Fee.",
+"Now hosted on Berlios.de, and maintained by Cian Duffy and Scott McCreary.",
+"Patches welcome...",
 
 NULL};
 
