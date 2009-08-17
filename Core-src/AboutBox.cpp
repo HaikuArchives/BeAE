@@ -53,16 +53,17 @@ enum {FADE_IN, FADE_OUT, PAUSE};
 #define FADE_STEPS	20
 #define PAUSE_STEPS	30
 
-const char *version = "Version 1.1 July 2009";
+const char *version = "Version 1.1 August 17, 2009";
 
 static char *txt[] = {
 "BeAE - Audio Editing for the BeOS, Haiku and Zeta",
 "Created by Frans van Nispen (frans@xentronix.com)",
 "© 2000 Xentronix Software http://www.xentronix.com",
-"Preference & Language classes: John 'YNOP' Talton,",
+"Now hosted on Berlios.de, maintained by Cian Duffy & Scott McCreary.",
 "Special thanks goes to:",
-"Nicholas Blachford, for helping me with the filters and effects,",
-"Axel Dörfler & David McPaul for helping out with the new MediaKit.",
+"Preference & Language classes: John 'YNOP' Talton,",
+"Nicholas Blachford, for helping with the filters and effects,",
+"Axel Dörfler & David McPaul for helping out with the MediaKit.",
 "Stephan Assmus - German translation and ColdCut color scheme,",
 "Gilles Richard - French translation,",
 "Giuseppe Gargaro - Italian translation,",
@@ -70,9 +71,8 @@ static char *txt[] = {
 "Carlos Alberto G-M Costa - Spanish translation,",
 "Zsolt Bihari - Hungarian translation,",
 "Bruno G. Albuquerque - Portuguese translation,",
-"Eugenia Loli-Queru & the members of our beta-program.",
+"Eugenia Loli-Queru & the members of the beta-program.",
 "And those who helped pay the $250 Open Source Fee.",
-"Now hosted on Berlios.de, and maintained by Cian Duffy and Scott McCreary.",
 "Patches welcome...",
 
 NULL};
