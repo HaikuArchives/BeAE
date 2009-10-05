@@ -1,7 +1,0 @@
-SubDir TOP ;
-
-SubInclude TOP BeAE ;
-SubInclude TOP Core-src ;
-
-MakeDistro distro ;
-
