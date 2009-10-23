@@ -633,7 +633,7 @@ void SampleView::MouseMoved(BPoint p, uint32 button, const BMessage *msg)
 	
 	if (Prefs.drag_drop && drag_selection)				/* drag & drop */
 	{
-		if (abs(p.x - start_selection.x) >3)
+		if (fabs(p.x - start_selection.x) >3)
 		{
 			BRect r = Bounds();
 			r.top += POINTER_BAR_HEIGHT;

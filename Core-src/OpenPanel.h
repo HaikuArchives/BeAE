@@ -64,8 +64,13 @@ public:
 	OpenFilter(void);
 	virtual ~OpenFilter(void);
 	
+#if defined(__HAIKU__)
+	virtual bool Filter(const entry_ref* ref,BNode* node,
+		struct stat_beos* st,const char* filetype);
+#else
 	virtual bool Filter(const entry_ref* ref,BNode* node,
 		struct stat* st,const char* filetype);
+#endif
 };
 
 #endif // #ifndef _SNDFILEPANEL_H_

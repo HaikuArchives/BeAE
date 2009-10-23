@@ -26,7 +26,7 @@ set(BEAE_SRCS AboutBox.cpp AmplifierFilter.cpp AnalyzeWindow.cpp BassBoostFilter
 add_executable(BeAE ${BEAE_SRCS})
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-multichar -Woverloaded-virtual -Wno-unknown-pragmas")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-multichar -Woverloaded-virtual -Wno-unknown-pragmas -Wno-ctor-dtor-privacy")
 
 
 target_link_libraries(BeAE "be" "root" "tracker" "media" "translation" "game")
@@ -48,6 +48,10 @@ add_custom_command(TARGET BeAE POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/BeAE/Bitmaps ${BEAE_BUILD_DIR}/Bitmaps
 					COMMENT "Copying bitmaps to build directory")
 
+#Copy the languages to the build directory so that BeAE will run properly.
+add_custom_command(TARGET BeAE POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/BeAE/Languages ${BEAE_BUILD_DIR}/Languages
+					COMMENT "Copying languages to build directory")
 
 if(OUT_OF_SOURCE)
 

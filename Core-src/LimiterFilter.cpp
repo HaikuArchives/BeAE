@@ -78,7 +78,7 @@ void LimiterFilter::UpdateValues()
 /*******************************************************
 *   Init & exit
 *******************************************************/
-bool LimiterFilter::InitFilter(float f, int32 c)
+bool LimiterFilter::InitFilter(float f, int32 c, int32 pass, int32 total_samples)
 {
 	RealtimeFilter::InitFilter(f, c);
 
@@ -105,7 +105,7 @@ void LimiterFilter::DeAllocate()
 *******************************************************/
 void LimiterFilter::FilterBuffer(float *buffer, size_t size)
 {
-	float tmp, tmp2, lim;
+	float tmp, lim;
 	float mix = Prefs.filter_limiter_mix/100.0;
 	float mix2 = 1-mix;
 	float value = Prefs.filter_limiter_value/1000.0;

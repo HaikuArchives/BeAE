@@ -262,8 +262,13 @@ OpenFilter::~OpenFilter(void)
 {
 }
 
+#if defined(__HAIKU__)
+bool OpenFilter::Filter(const entry_ref* ref,BNode* node,
+	struct stat_beos* st,const char* filetype)
+#else
 bool OpenFilter::Filter(const entry_ref* ref,BNode* node,
 	struct stat* st,const char* filetype)
+#endif
 {
 	bool admitIt = false;
 	char type[256];

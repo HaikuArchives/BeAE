@@ -98,7 +98,7 @@ void EntryView::ConvertToPointer()
 		int seconds = 0;
 		int minutes = 0;
 		float time = 0;
-		sscanf(Text(), "%d:%d.%s", &minutes, &seconds, &t);
+		sscanf(Text(), "%d:%d.%s", &minutes, &seconds, t);
 		sprintf(s, "0.");
 		strcat(s, t);
 		sscanf(s, "%f", &time);

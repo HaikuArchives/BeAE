@@ -32,7 +32,7 @@
 class LimiterFilter : public RealtimeFilter {
   public:
 	LimiterFilter(bool r = true);
-	virtual bool InitFilter(float f, int32 channels = 2);
+	virtual bool InitFilter(float f, int32 channels = 2, int32 pass = 0, int32 total_samples = 0);
 	virtual void DeAllocate();
 	virtual void FilterBuffer(float *, size_t);
 	virtual void UpdateValues();

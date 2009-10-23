@@ -218,7 +218,7 @@ void SwatchView::DrawOffscreen()
 			rect.InsetBy(1.0, 1.0);	
 			m_view->SetLowColor(255,255,255,255);
 			m_view->SetHighColor(226,226,226,255);
-			pattern checkerboard = (pattern){ 240, 240, 240, 240, 15, 15, 15, 15 };
+			pattern checkerboard = (pattern){ { 240, 240, 240, 240, 15, 15, 15, 15 } };
 			m_view->FillRect(rect, checkerboard);
 	
 			// draw color (with alpha)
@@ -254,7 +254,7 @@ void SwatchView::DrawOffscreen()
 			rect.InsetBy(1.0, 1.0);	
 			m_view->SetLowColor(255,255,255,255);
 			m_view->SetHighColor(226,226,226,255);
-			pattern checkerboard = (pattern){ 240, 240, 240, 240, 15, 15, 15, 15 };
+			pattern checkerboard = (pattern){ { 240, 240, 240, 240, 15, 15, 15, 15 } };
 			m_view->FillRect(rect, checkerboard);
 	
 			// draw color (with alpha)
