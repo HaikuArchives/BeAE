@@ -53,7 +53,7 @@ enum {FADE_IN, FADE_OUT, PAUSE};
 #define FADE_STEPS	20
 #define PAUSE_STEPS	30
 
-const char *version = "Version 1.11 October 23, 2009";
+const char *version = "Version 1.2 October 31, 2009";
 
 static const char *txt[] = {
 "BeAE - Audio Editing for the BeOS, Haiku and Zeta",
@@ -74,6 +74,7 @@ static const char *txt[] = {
 "Eugenia Loli-Queru & the members of the beta-program.",
 "Michele Frau for the new icon and graphics.",
 "Chris Roberts for the CMake build files and other build fixes.",
+"Humdinger for spiffing up the html help and history pages.",
 "And those who helped pay the $250 Open Source Fee.",
 "Patches welcome...",
 

@@ -53,12 +53,18 @@ add_custom_command(TARGET BeAE POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/BeAE/Languages ${BEAE_BUILD_DIR}/Languages
 					COMMENT "Copying languages to build directory")
 
+#Copy the help folder to the build directory so that BeAE will run properly.
+add_custom_command(TARGET BeAE POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/BeAE/Help ${BEAE_BUILD_DIR}/Help
+					COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/BeAE/Help/images ${BEAE_BUILD_DIR}/Help/images
+					COMMENT "Copying help to build directory")
+
 if(OUT_OF_SOURCE)
 
 	add_custom_target(distro
 					COMMAND ${CMAKE_COMMAND} -E copy_directory ${BEAE_SOURCE_DIR}/BeAE ${BEAE_BINARY_DIR}/BeAE
 					COMMAND ${CMAKE_COMMAND} -E copy_if_different ${BEAE_BUILD_DIR}/BeAE ${BEAE_BINARY_DIR}/BeAE/BeAE
-					COMMAND cd "${BEAE_BINARY_DIR}" && zip -9ry ${BEAE_BINARY_DIR}/BeAE.zip BeAE -x *.svn* -x *.OptionalPackageDescription*
+					COMMAND cd "${BEAE_BINARY_DIR}" && zip -9ry ${BEAE_BINARY_DIR}/BeAE.zip BeAE -x *.svn* -x .OptionalPackageDescription
 					DEPENDS BeAE
 					COMMENT "Creating BeAE distribution")
 
@@ -66,7 +72,7 @@ else(OUT_OF_SOURCE)
 
 	add_custom_target(distro
 					COMMAND ${CMAKE_COMMAND} -E copy_if_different ${BEAE_BUILD_DIR}/BeAE ${BEAE_SOURCE_DIR}/BeAE/BeAE
-					COMMAND cd "${BEAE_BINARY_DIR}" && zip -9ry ${BEAE_BINARY_DIR}/BeAE.zip BeAE -x *.svn* -x *.OptionalPackageDescription*
+					COMMAND cd "${BEAE_BINARY_DIR}" && zip -9ry ${BEAE_BINARY_DIR}/BeAE.zip BeAE -x *.svn* -x .OptionalPackageDescription
 					DEPENDS BeAE
 					COMMENT "Creating BeAE distribution")
 
