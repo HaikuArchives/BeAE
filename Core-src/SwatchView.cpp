@@ -33,7 +33,7 @@
 
 char* RGBtoText(const rgb_color& color) 
 {
-	static char* p="0123456789ABCDEF";
+	static const char* p="0123456789ABCDEF";
 
 	char *rgbtxt = new char[8];
 
@@ -57,7 +57,7 @@ SwatchView::SwatchView(BRect frame, const char *name, BMessage* msg)
 	active = false;
 }
 
-SwatchView::SwatchView(BRect frame, const char *name, rgb_color color, BMessage* msg = NULL)
+SwatchView::SwatchView(BRect frame, const char *name, rgb_color color, BMessage* msg)
  : BControl(frame, "", "", msg, B_FOLLOW_NONE, B_WILL_DRAW)
 {
 	Init();

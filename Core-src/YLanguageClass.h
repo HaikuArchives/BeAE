@@ -97,7 +97,7 @@ class YLanguageClass{
       bool userDefinedPath;
       status_t our_status;
       BString LName;
-      map <const char*,const char*,ltstr>LangList;
+      std::map <const char*,const char*,ltstr>LangList;
 };
 
 extern YLanguageClass Language; // Included so you don't have too 

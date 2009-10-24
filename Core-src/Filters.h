@@ -38,7 +38,7 @@
 
 typedef struct filter_info
 {
-	char *name;
+	const char *name;
 	int32 type;
 	int32 passes;
 

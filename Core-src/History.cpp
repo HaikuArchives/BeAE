@@ -33,6 +33,11 @@
 #include <Volume.h>
 #include <stdio.h>
 
+// Needed for malloc and friends
+#if defined(__HAIKU__)
+#include <stdlib.h>
+#endif
+
 #include "CommonPool.h"
 #include "History.h"
 #include "MyClipBoard.h"

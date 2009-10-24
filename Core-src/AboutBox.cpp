@@ -43,7 +43,7 @@ class AboutView : public BView
   private:
 	int mode;
 	int count;
-	char *p;
+	const char *p;
 	int line;
 	uint8 r,g,b;
 };
@@ -55,7 +55,7 @@ enum {FADE_IN, FADE_OUT, PAUSE};
 
 const char *version = "Version 1.11 October 23, 2009";
 
-static char *txt[] = {
+static const char *txt[] = {
 "BeAE - Audio Editing for the BeOS, Haiku and Zeta",
 "Created by Frans van Nispen (frans@xentronix.com)",
 "© 2000 Xentronix Software http://www.xentronix.com",

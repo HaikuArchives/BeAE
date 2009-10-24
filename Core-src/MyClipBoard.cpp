@@ -34,6 +34,11 @@
 #include <String.h>
 #include <stdio.h>
 
+// Needed for malloc and friends with gcc4
+#if defined(__HAIKU__)
+#include <stdlib.h>
+#endif
+
 #include "MyClipBoard.h"
 #include "CommonPool.h"
 

@@ -191,8 +191,8 @@ PointersView::PointersView(BRect r) :
 	full_update = true;
 
 	m_update = 0;
-	BRect r(31, 14, 102, 32);
-	AddChild(new EntryView(r, "pointer", this));
+	BRect rect(31, 14, 102, 32);
+	AddChild(new EntryView(rect, "pointer", this));
 	FindView("pointer")->MoveTo(-100,-100);
 }
 

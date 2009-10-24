@@ -145,7 +145,7 @@ class CommonPool{
 	bool	SetLoop(bool);				// returns old state
 	int32	SetPlayHook(void (*hook)(float*, size_t, void *), int32 min=0, void *cookie=NULL);	// set a hook for a filter
 	void	RemovePlayHook(void (*hook)(float*, size_t, void *), int32 min=-1);			// set a hook for a filter
-	void	(*BufferHook[PLAY_HOOKS])(float*, size_t, void *cookie=NULL);
+	void	(*BufferHook[PLAY_HOOKS])(float*, size_t, void *cookie);
 	void	*BufferCookie[PLAY_HOOKS];
 	
 	bool	PrepareFilter();		// to save undo-data, stop playing, check selection

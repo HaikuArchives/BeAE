@@ -33,6 +33,11 @@
 #include <View.h>
 #include "MyStringItem.h"
 
+// Needed for string functions with gcc4
+#if defined(__HAIKU__)
+#include <string.h>
+#endif
+
 StringItem::StringItem(const char *label, int32 level, bool expanded)
 	: BListItem(level, expanded)
 {

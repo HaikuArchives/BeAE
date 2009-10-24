@@ -58,7 +58,7 @@ class KeyItem : public StringItem{
 
   private:
   	void DrawMods(BView *view, BRect r, int32 mod);
-  	void DrawKey(BView *view, BRect r, char *c);
+  	void DrawKey(BView *view, BRect r, const char *c);
 
 	char m_key, m_key2;
 	int32 m_mod, m_mod2, m_id;
@@ -117,7 +117,7 @@ void KeyItem::DrawItem(BView *view, BRect rect, bool all)
 		return;
 	}
 
-	char *key;
+	const char *key;
 
 	StringItem::DrawItem(view, rect, all);
 
@@ -226,7 +226,7 @@ void KeyItem::DrawMods(BView *view, BRect r, int32 mod)
 	}
 }
 
-void KeyItem::DrawKey(BView *view, BRect r, char *c)
+void KeyItem::DrawKey(BView *view, BRect r, const char *c)
 {
 	BFont font;
 	view->GetFont(&font);
@@ -267,7 +267,7 @@ class KeyControl : public BControl{
 
   private:
   	float DrawMods(BRect r, int32 mod);
-  	void DrawKey(BRect r, char *c);
+  	void DrawKey(BRect r, const char *c);
 
 	char m_key;
 	int32 m_mod;
@@ -367,7 +367,7 @@ void KeyControl::Draw(BRect r)
 	font.GetHeight(&fh);
 	float y = Bounds().bottom - ceil(fh.descent);
 
-	char *key;
+	const char *key;
 
 	SetHighColor(0,0,0);
 	DrawString( Label(), BPoint(2.0, y));
@@ -447,7 +447,7 @@ float KeyControl::DrawMods(BRect r, int32 mod)
 	return r.left+4;
 }
 
-void KeyControl::DrawKey(BRect r, char *c)
+void KeyControl::DrawKey(BRect r, const char *c)
 {
 	BFont font;
 	GetFont(&font);

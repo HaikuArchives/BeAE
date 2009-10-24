@@ -60,7 +60,7 @@ cookie_record play_cookie;
 
 // URL to the homepage/Tutorials/others
 //char *TUTORIALS_URL = "http://www.xentronix.com/module.php?mod=document";
-char *HOMEPAGE_URL = "http://developer.berlios.de/projects/beae/";
+const char *HOMEPAGE_URL = "http://developer.berlios.de/projects/beae/";
 
 
 class MyMenuBar : public BMenuBar{
@@ -1053,7 +1053,7 @@ void MainWindow::MessageReceived(BMessage *message)
 }		break;
 		
 	case HOMEPAGE:
-		be_roster->Launch("text/html",1, &HOMEPAGE_URL);
+		be_roster->Launch("text/html",1, const_cast<char**>(&HOMEPAGE_URL));
 		break;
 		
 	case PREFERENCES:
