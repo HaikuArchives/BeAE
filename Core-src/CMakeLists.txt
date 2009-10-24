@@ -58,7 +58,7 @@ if(OUT_OF_SOURCE)
 	add_custom_target(distro
 					COMMAND ${CMAKE_COMMAND} -E copy_directory ${BEAE_SOURCE_DIR}/BeAE ${BEAE_BINARY_DIR}/BeAE
 					COMMAND ${CMAKE_COMMAND} -E copy_if_different ${BEAE_BUILD_DIR}/BeAE ${BEAE_BINARY_DIR}/BeAE/BeAE
-					#COMMAND execute zip or cpack command here?
+					COMMAND cd "${BEAE_BINARY_DIR}" && zip -9ry ${BEAE_BINARY_DIR}/BeAE.zip BeAE -x *.svn* -x *.OptionalPackageDescription*
 					DEPENDS BeAE
 					COMMENT "Creating BeAE distribution")
 
@@ -66,7 +66,7 @@ else(OUT_OF_SOURCE)
 
 	add_custom_target(distro
 					COMMAND ${CMAKE_COMMAND} -E copy_if_different ${BEAE_BUILD_DIR}/BeAE ${BEAE_SOURCE_DIR}/BeAE/BeAE
-					#COMMAND execute zip or cpack command here?
+					COMMAND cd "${BEAE_BINARY_DIR}" && zip -9ry ${BEAE_BINARY_DIR}/BeAE.zip BeAE -x *.svn* -x *.OptionalPackageDescription*
 					DEPENDS BeAE
 					COMMENT "Creating BeAE distribution")
 
