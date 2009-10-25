@@ -13,10 +13,10 @@ function(HAIKU_ADD_RESOURCE_DEF TARGET FILENAME)
 	get_filename_component(rdeffile ${FILENAME} NAME_WE)
 
 	set(rsrcfile "${rdeffile}.rsrc")
-	set(rsrcpath "${CMAKE_CURRENT_BINARY_DIR}/${rsrcfile}")
+	set(rsrcpath "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${rsrcfile}.dir/${rsrcfile}")
 
 	add_custom_command(
-		OUTPUT ${rsrcfile}
+		OUTPUT ${rsrcpath}
 		COMMAND "rc" "-o" "${rsrcpath}" "${rdefpath}"
 		DEPENDS ${rdefpath}
 		COMMENT "Compiling resource ${rsrcpath}")
