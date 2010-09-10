@@ -1121,7 +1121,7 @@ void CommonPool::BuildFilterMenu(BMenu *fmenu){
 *   
 *******************************************************/
 bool CommonPool::Expired(){
-   if(EXPIRES_M == EXPIRES_Y == EXPIRES_D == 0){ return false; }
+   if((EXPIRES_M == 0) && (EXPIRES_Y == 0) && (EXPIRES_D == 0)){ return false; }
       
    char Sm[4],Sd[3],Sy[5];
    sscanf(__DATE__,"%s %s %s",Sm,Sd,Sy);

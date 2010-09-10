@@ -132,12 +132,13 @@ void SampleView::Pulse()
 	}
 	int64 p = 0;
 
-	if (Pool.sample_type != NONE)
+	if (Pool.sample_type != NONE){
 		if (Pool.IsPlaying()){
 			p = Pool.last_pointer;
-		}else
+		} else {
 			p = Pool.pointer;
-
+		}
+	}	
 	if (p!=pointer){
 		pointer = p;
 		
@@ -410,7 +411,7 @@ void SampleView::MouseDown(BPoint p)
 
 			}
 			// Check for extending the selection
-			else if ((left_pointer || right_pointer) && (left_select || right_select) ||
+			else if (((left_pointer || right_pointer) && (left_select || right_select)) ||
 					(button == B_PRIMARY_MOUSE_BUTTON && (modifiers() & B_SHIFT_KEY))){
 				/* Drag the end-pointers */
 				drag_border = true;

@@ -117,7 +117,11 @@ bool RealtimeFilter::InitFilter(float f, int32 c, int32 pass, int32 size)
 	m_channels = c;
 	m_pass = pass;
 	m_total = size;
-	return true;
+	if (m_total != 0) {
+	    return true;
+	} else {
+	    return false;
+	}
 }
 
 /*******************************************************
