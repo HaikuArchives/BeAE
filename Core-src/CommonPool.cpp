@@ -1121,6 +1121,9 @@ void CommonPool::BuildFilterMenu(BMenu *fmenu){
 *   
 *******************************************************/
 bool CommonPool::Expired(){
+
+/* This is now open source, no need for expiration date here.
+
    if((EXPIRES_M == 0) && (EXPIRES_Y == 0) && (EXPIRES_D == 0)){ return false; }
       
    char Sm[4],Sd[3],Sy[5];
@@ -1164,6 +1167,6 @@ bool CommonPool::Expired(){
    if(y <= (now->tm_year+1900)){ return true; }
    if(m <= now->tm_mon){ return true; }
    if(d  <= now->tm_mday){ return true; }
-   
-   return false;
+*/   
+   return false; 
 }
