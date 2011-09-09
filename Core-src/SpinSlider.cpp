@@ -199,6 +199,7 @@ int32 SpinSlider::invoker_thread(void* data)
 		}
 		snooze(slider->SnoozeAmount());
 	}
+	return last_value;
 }
 
 void SpinSlider::SetEnabled(bool enabled)
