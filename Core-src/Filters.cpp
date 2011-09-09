@@ -314,7 +314,8 @@ InvertFilter::InvertFilter() : RealtimeFilter(NULL, false)
 void InvertFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		*buffer++ = -*buffer;
+		buffer++;
+		*buffer = -*buffer;
 	}
 }
 
@@ -336,7 +337,8 @@ FadeInFilter::FadeInFilter() : RealtimeFilter(NULL, false)
 void FadeInFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		*buffer++ = (*buffer)*count / m_total;
+		buffer++;
+		*buffer = (*buffer)*count / m_total;
 		count++;
 	}
 }
@@ -355,7 +357,8 @@ FadeOutFilter::FadeOutFilter() : RealtimeFilter(NULL, false)
 void FadeOutFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		*buffer++ = (*buffer)*count / m_total;
+		buffer++;
+		*buffer = (*buffer)*count / m_total;
 		count--;
 	}
 }
