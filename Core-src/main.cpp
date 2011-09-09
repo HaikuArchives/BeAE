@@ -482,7 +482,9 @@ void MyApplication::Save(BMessage *message){
 					{	uint8 *tmp = (uint8*)buffer;
 						for (int32 count = 0; count<block*channels; count++){
 							t = *mem++;
-							*tmp = ROUND(t*127.0);	*tmp++ = *tmp ^ 0x80;
+							*tmp = ROUND(t*127.0);
+							tmp++;
+							*tmp = *tmp ^ 0x80;
 						}
 					}	break;
 					case 0x1:		// 0 == mid, -127 == bottom, +127 == top (not officially supported format)
