@@ -53,13 +53,13 @@ enum {FADE_IN, FADE_OUT, PAUSE};
 #define FADE_STEPS	20
 #define PAUSE_STEPS	30
 
-const char *version = "Version 1.2 October 31, 2009";
+const char *version = "Version 1.2, " __DATE__;
 
 static const char *txt[] = {
 "BeAE - Audio Editing for the BeOS, Haiku and Zeta",
 "Created by Frans van Nispen (frans@xentronix.com)",
 "© 2000 Xentronix Software http://www.xentronix.com",
-"Now hosted on Berlios.de, maintained by Cian Duffy & Scott McCreary.",
+"Now hosted on HaikuArchives@GitHub.",
 "Special thanks goes to:",
 "Preference & Language classes: John 'YNOP' Talton,",
 "Nicholas Blachford, for helping with the filters and effects,",
@@ -76,8 +76,6 @@ static const char *txt[] = {
 "Chris Roberts for the CMake build files and other build fixes.",
 "Humdinger for spiffing up the html help and history pages.",
 "And those who helped pay the $250 Open Source Fee.",
-"Patches welcome...",
-
 NULL};
 
 AboutView::AboutView(BRect rect) : BView(rect, NULL, B_FOLLOW_ALL, B_WILL_DRAW | B_PULSE_NEEDED)
@@ -103,7 +101,7 @@ void AboutView::Draw(BRect rect)
 	SetLowColor(255, 255, 255);
 	SetHighColor(0,0,0);
 	DrawString(version, BPoint(rect.right - font.StringWidth(version)-5, rect.bottom-5)); 
-	DrawString("http://developer.berlios.de/projects/beae", BPoint(rect.left+5, rect.bottom-5)); 
+	DrawString("https://github.com/HaikuArchives/BeAE/", BPoint(rect.left+5, rect.bottom-5)); 
 	
 	SetLowColor(224,238,252);
 	SetHighColor(r,g,b);
