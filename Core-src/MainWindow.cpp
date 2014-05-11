@@ -389,13 +389,13 @@ MainWindow::MainWindow(BRect frame)
 	VM.Init();
 #endif
 
-	Pool.mouseArrow = new BCursor(IMouse_Arrow);
-	Pool.mouseArrowLeft = new BCursor(IMouse_ArrowLeft);
-	Pool.mouseArrowRight = new BCursor(IMouse_ArrowRight);
+	Pool.mouseArrow = new BCursor(B_CURSOR_ID_SYSTEM_DEFAULT);
+	Pool.mouseArrowLeft = new BCursor(B_CURSOR_ID_RESIZE_WEST);
+	Pool.mouseArrowRight = new BCursor(B_CURSOR_ID_RESIZE_EAST);
 	Pool.mousePencil = new BCursor(IMouse_Pencil);
-	Pool.mouseMove = new BCursor(IMouse_Move);
+	Pool.mouseMove = new BCursor(B_CURSOR_ID_MOVE);
 	Pool.mouseArrowMove = new BCursor(IMouse_MoveArrow);
-	Pool.mouseLeftRight = new BCursor(IMouse_LeftRight);
+	Pool.mouseLeftRight = new BCursor(B_CURSOR_ID_RESIZE_EAST_WEST);
 
 	ResizeTo( Prefs.frame.Width(), Prefs.frame.Height() );
 	MoveTo( Prefs.frame.left, Prefs.frame.top );
