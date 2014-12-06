@@ -6,7 +6,7 @@
 
 # The name of the binary.
 NAME = BeAE
-TARGET_DIR = ../BeAE/
+TARGET_DIR = ../BeAE
 
 # The type of binary, must be one of:
 #	APP:	Application
@@ -112,7 +112,7 @@ SYMBOLS :=
 
 #	Includes debug information, which allows the binary to be debugged easily.
 #	If set to "TRUE", debug info will be created.
-DEBUGGER := 
+DEBUGGER := TRUE
 
 #	Specify any additional compiler flags to be used.
 COMPILER_FLAGS = -Wall -Wno-multichar -Woverloaded-virtual -Wno-unknown-pragmas -Wno-ctor-dtor-privacy
