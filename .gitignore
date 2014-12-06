@@ -1,5 +1,2 @@
-build*/
-*.cmake
-CMakeFiles*/
-CMakeCache.txt
-Makefile
+objects*/
+BeAE/BeAE
