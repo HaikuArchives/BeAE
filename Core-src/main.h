@@ -37,6 +37,7 @@
 class MyApplication : public BApplication {
  public:
 					MyApplication();
+					~MyApplication();
 	virtual void	MessageReceived(BMessage *message);
 	virtual void	RefsReceived(BMessage *message);
 	virtual bool	QuitRequested();

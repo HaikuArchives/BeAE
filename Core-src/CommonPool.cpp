@@ -137,9 +137,9 @@ void CommonPool::Init(){
 *   
 *******************************************************/
 CommonPool::~CommonPool(){
-	if (progress)
+	if (progress != NULL && PrefWin->Lock())
 		progress->Quit();
-	
+
 	if (IsPlaying())
 		StopPlaying();
 
@@ -151,9 +151,9 @@ CommonPool::~CommonPool(){
 		free(sample_memory);
 #endif
 
-	if (PrefWin)
+	if (PrefWin != NULL && PrefWin->Lock()) {
 		PrefWin->Quit();
-	
+	}
 //	if (tt)	delete tt;
 }
 
