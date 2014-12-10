@@ -64,25 +64,18 @@ MyApplication::MyApplication():BApplication("application/x-vnd.BeAE-BeAE")
 	mainWindow->Show();
 }
 
+MyApplication::~MyApplication()
+{
+	if (fOpenPanel)
+		delete fOpenPanel;
+
+	if (fSavePanel)
+		delete fSavePanel;
+}
+
 bool MyApplication::QuitRequested()
 {
-	if (mainWindow){
-		mainWindow->Lock();
-		if(mainWindow->QuitRequested()){
-			mainWindow->Quit();
-	
-			if (fOpenPanel)
-				delete fOpenPanel;
-	
-			if (fSavePanel)
-				delete fSavePanel;
-
-			return true;
-		}else{
-			mainWindow->Unlock();
-		}
-	}
-	return false;
+	return true;
 }
 
 void MyApplication::MessageReceived(BMessage *message)
