@@ -30,6 +30,7 @@
 #define _Transport_VIEW
 #include <View.h>
 #include <Bitmap.h>
+#include <PictureButton.h>
 
 #include "Globals.h"
 

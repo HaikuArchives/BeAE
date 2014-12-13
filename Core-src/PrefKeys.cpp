@@ -29,6 +29,7 @@
 #include <InterfaceKit.h>
 #include <StorageKit.h>
 #include <String.h>
+#include <StringItem.h>
 #include <Path.h>
 #include <TranslationKit.h>
 #include <TranslationUtils.h>
@@ -37,13 +38,12 @@
 #include "Globals.h"
 #include "PrefKeys.h"
 #include "Shortcut.h"
-#include "MyStringItem.h"
 
 #define SELECT		'selK'
 
 //================================================================================================= Item
 
-class KeyItem : public StringItem{
+class KeyItem : public BStringItem{
   public:
 	KeyItem(const char *ID, char key, int32 mod, char key2, int32 mod2, int32 id);
 	~KeyItem();
@@ -65,7 +65,7 @@ class KeyItem : public StringItem{
 };
 
 KeyItem::KeyItem(const char *ID, char key, int32 mod, char key2, int32 mod2, int32 id)
-	: StringItem(ID), m_key(key), m_key2(key2), m_mod(mod), m_mod2(mod2), m_id(id)
+	: BStringItem(ID), m_key(key), m_key2(key2), m_mod(mod), m_mod2(mod2), m_id(id)
 {
 }
 
@@ -112,14 +112,14 @@ void KeyItem::DrawItem(BView *view, BRect rect, bool all)
 		view->FillRect(rect, B_SOLID_LOW);
 		view->SetHighColor(0,0,0);
 		view->SetFont(be_bold_font);
-		view->DrawString( Label(), BPoint( rect.left +5, rect.top +font.Size() ));
+		view->DrawString( Text(), BPoint( rect.left +5, rect.top +font.Size() ));
 		view->SetFont(&font);
 		return;
 	}
 
 	const char *key;
 
-	StringItem::DrawItem(view, rect, all);
+	BStringItem::DrawItem(view, rect, all);
 
 	view->SetHighColor(240,240,240);
 	view->StrokeLine( BPoint(rect.left, rect.bottom), BPoint(rect.right, rect.bottom));

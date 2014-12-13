@@ -29,12 +29,12 @@
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
+#include <StringItem.h>
 #include <stdlib.h>
 
 #include "Globals.h"
 #include "FreqWindow.h"
 #include "SpinControl.h"
-#include "MyStringItem.h"
 
 #define QUIT			'quit'
 #define SET				'setF'
@@ -77,17 +77,17 @@ FreqWindow::FreqWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Language.get("
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	AddChild(view);
 
-	StringItem *it;
-	list->AddItem(it = new StringItem("96000"));
-	list->AddItem(it = new StringItem("64000"));
-	list->AddItem(it = new StringItem("48000"));
-	list->AddItem(it = new StringItem("44100"));
-	list->AddItem(it = new StringItem("32000"));
-	list->AddItem(it = new StringItem("22050"));
-	list->AddItem(it = new StringItem("16000"));
-	list->AddItem(it = new StringItem("12500"));
-	list->AddItem(it = new StringItem("11025"));
-	list->AddItem(it = new StringItem("8000"));
+	BStringItem *it;
+	list->AddItem(it = new BStringItem("96000"));
+	list->AddItem(it = new BStringItem("64000"));
+	list->AddItem(it = new BStringItem("48000"));
+	list->AddItem(it = new BStringItem("44100"));
+	list->AddItem(it = new BStringItem("32000"));
+	list->AddItem(it = new BStringItem("22050"));
+	list->AddItem(it = new BStringItem("16000"));
+	list->AddItem(it = new BStringItem("12500"));
+	list->AddItem(it = new BStringItem("11025"));
+	list->AddItem(it = new BStringItem("8000"));
 	list->SetSelectionMessage(new BMessage(SELECT));
 	list->SetInvocationMessage(new BMessage(SELECT));
 	SetList();

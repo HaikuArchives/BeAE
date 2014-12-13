@@ -39,7 +39,6 @@
 #include "PrefGeneral.h"
 #include "PrefKeys.h"
 #include "PrefColors.h"
-#include "MyStringItem.h"
 
 #define PREF_SELECT		'psel'
 
@@ -67,9 +66,9 @@ PrefView::PrefView(BRect frame):BView(frame, "Prefs view", B_FOLLOW_ALL_SIDES, B
 	configBox->SetLabel(" - ");
 	AddChild(configBox);
 
-	list->AddItem(new StringItem(Language.get("GENERAL")));
-	list->AddItem(new StringItem(Language.get("COLORSET")));
-	list->AddItem(new StringItem(Language.get("KEYBINDINGS")));
+	list->AddItem(new BStringItem(Language.get("GENERAL")));
+	list->AddItem(new BStringItem(Language.get("COLORSET")));
+	list->AddItem(new BStringItem(Language.get("KEYBINDINGS")));
 
 	r = Bounds();
 	AddChild(new BButton(BRect(r.right-120,r.bottom-32,r.right-8,r.bottom-8), NULL, Language.get("OK"), new BMessage(QUIT)) );

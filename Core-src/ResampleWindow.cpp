@@ -35,11 +35,11 @@
 #include <Path.h>
 #include <File.h>
 #include <Volume.h>
+#include <StringItem.h>
 
 #include "Globals.h"
 #include "FilterDialogs.h"
 #include "SpinControl.h"
-#include "MyStringItem.h"
 
 #define SET_TEXT		'setT'
 #define SET_BITS		'setB'
@@ -142,12 +142,12 @@ ResampleWindow::ResampleWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Langua
 	r_box->AddChild(bits);
 	view->AddChild(r_box);
 
-	StringItem *it;
-	resolution->AddItem(it = new StringItem("8"));
+	BStringItem *it;
+	resolution->AddItem(it = new BStringItem("8"));
 	if (Pool.sample_bits <= 8)	it->Select();
-	resolution->AddItem(it = new StringItem("16"));
+	resolution->AddItem(it = new BStringItem("16"));
 	if (Pool.sample_bits <= 16 && Pool.sample_bits >8)	it->Select();
-	resolution->AddItem(it = new StringItem("32"));
+	resolution->AddItem(it = new BStringItem("32"));
 	if (Pool.sample_bits <= 32 && Pool.sample_bits >16)	it->Select();
 	resolution->SetSelectionMessage(new BMessage(SELECT_BITS));
 	resolution->SetInvocationMessage(new BMessage(SELECT_BITS));
@@ -166,16 +166,16 @@ ResampleWindow::ResampleWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Langua
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	AddChild(view);
 
-//	list->AddItem(new StringItem("96000"));
-//	list->AddItem(new StringItem("64000"));
-	list->AddItem(new StringItem("48000"));
-	list->AddItem(new StringItem("44100"));
-	list->AddItem(new StringItem("32000"));
-	list->AddItem(new StringItem("22050"));
-	list->AddItem(new StringItem("16000"));
-	list->AddItem(new StringItem("12500"));
-	list->AddItem(new StringItem("11025"));
-	list->AddItem(new StringItem("8000"));
+//	list->AddItem(new BStringItem("96000"));
+//	list->AddItem(new BStringItem("64000"));
+	list->AddItem(new BStringItem("48000"));
+	list->AddItem(new BStringItem("44100"));
+	list->AddItem(new BStringItem("32000"));
+	list->AddItem(new BStringItem("22050"));
+	list->AddItem(new BStringItem("16000"));
+	list->AddItem(new BStringItem("12500"));
+	list->AddItem(new BStringItem("11025"));
+	list->AddItem(new BStringItem("8000"));
 	list->SetSelectionMessage(new BMessage(SELECT));
 	list->SetInvocationMessage(new BMessage(SELECT));
 	SetList(true);

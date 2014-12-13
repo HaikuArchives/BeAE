@@ -30,7 +30,6 @@
 #define _POOL_H
 #include <SoundPlayer.h>
 
-#include "ToolTip.h"
 #include "ProgressWindow.h"
 #include "TransportView.h"
 #include "PrefWindow.h"
@@ -104,8 +103,7 @@ class CommonPool{
 	
 	void SaveUndo();			// save Undo data
 	void Undo();				// undo
-	   
-	ToolTip *tt;
+
 	BSoundPlayer	*player;
 	PrefWindow	*PrefWin;		// preferences window
 	

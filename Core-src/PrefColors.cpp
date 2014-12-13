@@ -37,7 +37,6 @@
 #include "Globals.h"
 #include "PrefColors.h"
 #include "SwatchView.h"
-#include "MyStringItem.h"
 
 #define COLOR_SELECT		'colS'
 #define COLOR_CHANGE		'colC'
@@ -131,7 +130,7 @@ PrefColors::PrefColors(BRect frame):BView(frame, "Prefs color", B_FOLLOW_ALL,0){
 
 	for (int i=1; i<=36; i++){
 		sprintf(s, "COLOR%d", i);
-		list->AddItem(new StringItem(Language.get(s)));
+		list->AddItem(new BStringItem(Language.get(s)));
 	}
 
 	AddChild(control = new BColorControl(BPoint(r.left+8, r.bottom+16), B_CELLS_32x8, 1, "colorControl", new BMessage(COLOR_CHANGE)));
