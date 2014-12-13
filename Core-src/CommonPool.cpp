@@ -50,7 +50,6 @@
 #include "Globals.h"
 #include "CommonPool.h"
 #include "ProgressWindow.h"
-#include "ToolTip.h"
 #include "YPreferences.h"
 #include "YLanguageClass.h"
 #include "AboutBox.h"
@@ -82,7 +81,6 @@ CommonPool::CommonPool(){
 
 	// To be save set them to nil 
 	importmenu = NULL;
-	tt = NULL;				// ToolTips
 	progress = NULL;
 	player = NULL;
 	PrefWin = NULL;
@@ -137,7 +135,7 @@ void CommonPool::Init(){
 *   
 *******************************************************/
 CommonPool::~CommonPool(){
-	if (progress != NULL && PrefWin->Lock())
+	if (progress != NULL && progress->Lock())
 		progress->Quit();
 
 	if (IsPlaying())
@@ -154,7 +152,6 @@ CommonPool::~CommonPool(){
 	if (PrefWin != NULL && PrefWin->Lock()) {
 		PrefWin->Quit();
 	}
-//	if (tt)	delete tt;
 }
 
 // refills the PeakFile Cache
@@ -671,9 +668,7 @@ void CommonPool::DoAbout(){
 *   
 *******************************************************/
 void CommonPool::AddTip(BView *v,const char *tip){
-	if(tt){
-		tt->AddTip(v,tip);
-	}
+	v->SetToolTip(tip);
 }
 
 /*******************************************************

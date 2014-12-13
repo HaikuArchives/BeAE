@@ -32,14 +32,13 @@ APP_MIME_SIG =
 SRCS = AboutBox.cpp AmplifierFilter.cpp AnalyzeWindow.cpp BassBoostFilter.cpp \
 	BigView.cpp BitmapDrawer.cpp CommonClass.cpp CommonPool.cpp CompressorFilter.cpp \
 	DelayWindow.cpp Filters.cpp FreqWindow.cpp History.cpp IndexView.cpp LimiterFilter.cpp \
-	MainWindow.cpp MyClipBoard.cpp MyStringItem.cpp NormalizeFilter.cpp OpenPanel.cpp \
-	PeakFile.cpp PointersView.cpp PrefColors.cpp PrefGeneral.cpp PrefKeys.cpp PrefView.cpp \
+	MainWindow.cpp MyClipBoard.cpp NormalizeFilter.cpp OpenPanel.cpp PeakFile.cpp \
+	PointersView.cpp PrefColors.cpp PrefGeneral.cpp PrefKeys.cpp PrefView.cpp \
 	PrefWindow.cpp Preferences.cpp ProgressWindow.cpp RealtimeFilter.cpp ResampleWindow.cpp \
 	ReverbWindow.cpp RoomFilter.cpp SampleScopeWindow.cpp SampleView.cpp SavePanel.cpp \
 	Shortcut.cpp SpectrumWindow.cpp SpinButton.cpp SpinControl.cpp SpinSlider.cpp \
-	SwatchView.cpp TimeBarView.cpp ToolBarView.cpp ToolTip.cpp ToolTipWindow.cpp \
-	TransportView.cpp VMSystem.cpp VUView.cpp ValuesView.cpp YLanguageClass.cpp \
-	YPreferences.cpp main.cpp
+	SwatchView.cpp TimeBarView.cpp ToolBarView.cpp TransportView.cpp VMSystem.cpp \
+	VUView.cpp ValuesView.cpp YLanguageClass.cpp YPreferences.cpp main.cpp
 
 #	Specify the resource definition files to use. Full or relative paths can be
 #	used.
