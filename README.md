@@ -5,7 +5,7 @@ BeAe audio editor for Haiku applications. Has wide functionality.
 <hr></hr>
 Features:
 
-Attenuation function
+Attenuation function<br>
 Attenuation function
 Function Normilize
 Bass bost function
