@@ -1,7 +1,7 @@
 BeAe
 <hr></hr>
 
-![Screen](Screenshot.png)
+![Screen](BeAe.png)
 
 BeAe convenient audio editor for Haiku has a wide basic functionality
 
