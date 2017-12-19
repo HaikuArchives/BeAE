@@ -1,4 +1,4 @@
-BeAe audio editor for Haiku applications. Has wide functionality.
+BeAE audio editor for Haiku, with a wide array of features.
 
 ![Screenshot](BeAe.png)
 
