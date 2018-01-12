@@ -114,7 +114,7 @@ SYMBOLS :=
 DEBUGGER := 
 
 #	Specify any additional compiler flags to be used.
-COMPILER_FLAGS = -Wall -Wno-multichar -Woverloaded-virtual -Wno-unknown-pragmas -Wno-ctor-dtor-privacy
+COMPILER_FLAGS = -Wall -Wno-multichar -Woverloaded-virtual -Wno-unknown-pragmas -Wno-ctor-dtor-privacy -fpermissive
 
 #	Specify any additional linker flags to be used.
 LINKER_FLAGS = 
