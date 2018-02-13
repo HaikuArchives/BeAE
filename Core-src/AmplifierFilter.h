@@ -28,7 +28,6 @@
 
 #ifndef AMP_FILTER_H
 #define AMP_FILTER_H
-
 class AmplifierFilter : public RealtimeFilter {
   public:
 	AmplifierFilter(bool r = true);

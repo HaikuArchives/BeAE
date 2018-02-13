@@ -26,6 +26,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -49,16 +50,17 @@ AmplifierFilter::AmplifierFilter(bool b) : RealtimeFilter(Language.get("AMPLIFIE
 *******************************************************/
 BView *AmplifierFilter::ConfigView()
 {
-	BRect r(0,0,200,60);
 
-	BView *view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
+
+	BView *view = new BView(NULL, B_WILL_DRAW);
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
-	r.InsetBy(8,8);
-	r.bottom = r.top + 23;
-	value = new SpinSlider(r, NULL, Language.get("LEVEL"), new BMessage(CONTROL_CHANGED), 1, 300);
+	value = new SpinSlider(NULL, Language.get("LEVEL"), new BMessage(CONTROL_CHANGED), 1, 300);
 	value->SetValue(Prefs.filter_amplifier_value);
-	view->AddChild(value);
+
+	BLayoutBuilder::Group<>(view, B_HORIZONTAL, 0)
+		.Add(value)
+		.End();
 
 	return view;
 }

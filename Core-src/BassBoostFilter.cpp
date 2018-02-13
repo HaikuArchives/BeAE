@@ -26,6 +26,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -49,21 +50,18 @@ BassBoostFilter::BassBoostFilter(bool b) : RealtimeFilter(Language.get("BASSBOOS
 *******************************************************/
 BView *BassBoostFilter::ConfigView()
 {
-	BRect r(0,0,200,100);
-
-	BView *view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
+	BView *view = new BView(NULL, B_WILL_DRAW);
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
-	r.InsetBy(8,8);
-	r.bottom = r.top + 23;
-	freq = new SpinSlider(r, NULL, Language.get("BB_FREQUENCY"), new BMessage(CONTROL_CHANGED), 1, 1000);
+	freq = new SpinSlider(NULL, Language.get("BB_FREQUENCY"), new BMessage(CONTROL_CHANGED), 1, 1000);
 	freq->SetValue(Prefs.filter_bassboost_frequency);
-	view->AddChild(freq);
 
-	r.OffsetBy(0,40);
-	boost = new SpinSlider(r, NULL, Language.get("BB_BOOST"), new BMessage(CONTROL_CHANGED), 0, 24);
+	boost = new SpinSlider(NULL, Language.get("BB_BOOST"), new BMessage(CONTROL_CHANGED), 0, 24);
 	boost->SetValue(Prefs.filter_bassboost_boost);
-	view->AddChild(boost);
+
+	BLayoutBuilder::Group<>(view, B_VERTICAL)
+		.Add(freq)
+		.Add(boost);
 
 	return view;
 }

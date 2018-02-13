@@ -26,6 +26,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -50,21 +51,18 @@ LimiterFilter::LimiterFilter(bool b) : RealtimeFilter(Language.get("LIMITFILTER"
 *******************************************************/
 BView *LimiterFilter::ConfigView()
 {
-	BRect r(0,0,200,100);
-
-	BView *view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
+	BView *view = new BView(NULL, B_WILL_DRAW);
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
-	r.InsetBy(8,8);
-	r.bottom = r.top + 23;
-	value = new SpinSlider(r, NULL, Language.get("LEVEL"), new BMessage(CONTROL_CHANGED), 0, 100);
+	value = new SpinSlider(NULL, Language.get("LEVEL"), new BMessage(CONTROL_CHANGED), 0, 100);
 	value->SetValue(Prefs.filter_limiter_value);
-	view->AddChild(value);
 
-	r.OffsetBy(0,40);
-	mix = new SpinSlider(r, NULL, Language.get("MIX_LEVEL"), new BMessage(CONTROL_CHANGED), 0, 100);
+	mix = new SpinSlider(NULL, Language.get("MIX_LEVEL"), new BMessage(CONTROL_CHANGED), 0, 100);
 	mix->SetValue(Prefs.filter_limiter_mix);
-	view->AddChild(mix);
+
+	BLayoutBuilder::Group<>(view, B_VERTICAL)
+		.Add(value)
+		.Add(mix);
 
 	return view;
 }

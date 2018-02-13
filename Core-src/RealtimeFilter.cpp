@@ -26,9 +26,11 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Window.h>
-#include <View.h>
+#include <LayoutBuilder.h>
 #include <InterfaceKit.h>
+#include <View.h>
+#include <Window.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -44,27 +46,31 @@
 *   
 *******************************************************/
 RealtimeFilter::RealtimeFilter(const char *name, bool realtime)
-	: BWindow(BRect(1,1,240,200),name, B_FLOATING_WINDOW_LOOK,B_FLOATING_APP_WINDOW_FEEL, B_NOT_ZOOMABLE | B_NOT_RESIZABLE| B_AVOID_FOCUS)
+	: BWindow(BRect(1,1,240,200),name, B_FLOATING_WINDOW_LOOK,B_FLOATING_APP_WINDOW_FEEL, B_NOT_ZOOMABLE | B_NOT_RESIZABLE| B_AVOID_FOCUS| B_AUTO_UPDATE_SIZE_LIMITS)
 	, m_passes(1), m_pass(0)
 {
-	BRect r = Bounds();
-	BView *view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
-	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
+	//BView *view = new BView("placeHolder", B_WILL_DRAW);
+	//view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
-	view->AddChild(new BButton(BRect(r.right-78, r.bottom-30, r.right-8, r.bottom-8), NULL, Language.get("APPLY"), new BMessage(SET),
-		B_FOLLOW_RIGHT | B_FOLLOW_BOTTOM ));
-	view->AddChild(new BButton(BRect(r.right-153, r.bottom-30, r.right-83, r.bottom-8), NULL, Language.get("CANCEL"), new BMessage(B_QUIT_REQUESTED),
-		B_FOLLOW_RIGHT | B_FOLLOW_BOTTOM ));
-
-	view->AddChild(box = new BCheckBox(BRect(8, r.bottom-28, r.right-153, r.bottom-8), NULL, Language.get("BYPASS"), NULL, B_FOLLOW_BOTTOM));
+	box = new BCheckBox(NULL, Language.get("BYPASS"), NULL);
 	if (!realtime)
 	{
 		box->SetValue(B_CONTROL_ON);
 		box->SetEnabled(false);
 	}
 
+	BLayoutBuilder::Group<>(this, B_VERTICAL)
+		.SetInsets(B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING)
+		//.Add(view)
+		.AddGroup(B_HORIZONTAL)
+			.Add(box)
+			.AddGlue()
+			.Add(new BButton( NULL, Language.get("CANCEL"), new BMessage(B_QUIT_REQUESTED)))
+			.Add(new BButton(NULL, Language.get("APPLY"), new BMessage(SET)))
+		.End();
+
 	SetSizeLimits(FILTER_MIN_WIDTH,3000,40,3000);
-	AddChild(view);
+
 }
 
 /*******************************************************
