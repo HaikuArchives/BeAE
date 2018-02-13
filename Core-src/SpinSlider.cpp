@@ -62,7 +62,7 @@ SpinSlider::SpinSlider(const char *name, const char *label,
 	m_spinner->SetPrecision(0);
 	m_spinner->SetStep(1);
 
-	BLayoutBuilder::Group<>(this, B_VERTICAL)
+	BLayoutBuilder::Group<>(this, B_VERTICAL, 0)
 		.Add(new BStringView("label", label))
 		.AddGroup(B_HORIZONTAL)
 			.Add(m_slider, 0.75)
