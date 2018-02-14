@@ -38,7 +38,7 @@ class SpinSlider : public BControl
  private:
  
 	BSlider* m_slider;
-	BDecimalSpinner* m_spinner;
+	BSpinner* m_spinner;
 };
 
 #endif

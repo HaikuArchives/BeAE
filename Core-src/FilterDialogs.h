@@ -32,6 +32,7 @@
 #include <Application.h>
 #include <AppKit.h>
 #include <InterfaceKit.h>
+#include <Spinner.h>
 #include <String.h>
 #include "RealtimeFilter.h"
 #include "SpinControl.h"
@@ -53,7 +54,7 @@ private:
 	float m_frequency;
 	BView *view;
 	BListView *list, *resolution;
-	SpinControl *text, *left, *right, *bits;
+	BSpinner *text, *left, *right, *bits;
 	BRadioButton *mono, *stereo;
 };
 #endif
