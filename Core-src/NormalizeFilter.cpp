@@ -55,19 +55,12 @@ BView *NormalizeFilter::ConfigView()
 {
 	BView *view = new BView(NULL, B_WILL_DRAW);
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
-	/*
-	value = new SpinControl(r, NULL, Language.get("NORMALIZE_LEVEL"), NULL, 1, 100, Prefs.filter_normalize, 1);
-	view->AddChild(value);
-	*/
-	BDecimalSpinner* spinner = new BDecimalSpinner(NULL, Language.get("NORMALIZE_LEVEL"), NULL);
-	spinner->SetMinValue(1);
-	spinner->SetMaxValue(100);
-	spinner->SetPrecision(0);
-	spinner->SetStep(1);
-	spinner->SetValue(Prefs.filter_normalize);
+
+	value = new SpinSlider(NULL, Language.get("NORMALIZE_LEVEL"), new BMessage(CONTROL_CHANGED), 1, 100);
+	value->SetValue(Prefs.filter_normalize);
 
 	BLayoutBuilder::Group<>(view, B_VERTICAL, 0)
-		.Add(spinner )
+		.Add(value)
 		.End();
 
 	return view;

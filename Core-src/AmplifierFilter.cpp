@@ -58,7 +58,7 @@ BView *AmplifierFilter::ConfigView()
 	value = new SpinSlider(NULL, Language.get("LEVEL"), new BMessage(CONTROL_CHANGED), 1, 300);
 	value->SetValue(Prefs.filter_amplifier_value);
 
-	BLayoutBuilder::Group<>(view, B_HORIZONTAL, 0)
+	BLayoutBuilder::Group<>(view, B_VERTICAL, 0)
 		.Add(value)
 		.End();
 
