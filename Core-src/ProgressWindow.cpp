@@ -28,6 +28,7 @@
 
 #include <Application.h>
 #include <InterfaceKit.h>
+#include <LayoutBuilder.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -35,18 +36,14 @@
 #include "ProgressWindow.h"
 
 ProgressWindow::ProgressWindow(BRect frame)
-	:BWindow(frame, "Progress" ,B_FLOATING_WINDOW_LOOK,B_MODAL_APP_WINDOW_FEEL,B_NOT_RESIZABLE | B_NOT_CLOSABLE | B_NOT_ZOOMABLE)
+	:BWindow(frame, "Progress" ,B_FLOATING_WINDOW_LOOK,B_MODAL_APP_WINDOW_FEEL,B_NOT_RESIZABLE | B_NOT_CLOSABLE | B_NOT_ZOOMABLE| B_AUTO_UPDATE_SIZE_LIMITS)
 {
 	Lock();
 	Looper()->SetName("Progress Window");
-	
-	BView *view = new BView(frame, NULL, B_FOLLOW_ALL, B_WILL_DRAW | B_NOT_CLOSABLE);
-	frame.InsetBy(2,2);
-	frame.top -= 8;
-	view->AddChild(bar = new BStatusBar(frame, NULL, NULL, NULL));
-	view->SetViewColor(216,216,216);
-	AddChild(view);
-	
+
+	BLayoutBuilder::Group<>(this, B_HORIZONTAL, 0)
+			.Add(bar = new BStatusBar(NULL, NULL, NULL));
+
 	Unlock();
 	Run();
 }
@@ -69,7 +66,6 @@ void ProgressWindow::StartProgress(const char *label, int32 max)
 	bar->Reset();
 	bar->SetMaxValue(max);
 
-	ResizeTo(300,30);
 	MoveTo( Prefs.frame.Width()/2 -150 + Prefs.frame.left, 	Prefs.frame.Height()/2 -15 + Prefs.frame.top);
 	if (IsHidden())
 		Show();

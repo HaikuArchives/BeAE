@@ -26,6 +26,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -34,7 +35,6 @@
 
 #include "Globals.h"
 #include "FreqWindow.h"
-#include "SpinControl.h"
 
 #define QUIT			'quit'
 #define SET				'setF'
@@ -44,38 +44,31 @@
 /*******************************************************
 *   
 *******************************************************/
-FreqWindow::FreqWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Language.get("FREQ_WINDOW"),B_FLOATING_WINDOW_LOOK,B_FLOATING_APP_WINDOW_FEEL, B_NOT_RESIZABLE|B_NOT_ZOOMABLE)
+FreqWindow::FreqWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),
+		Language.get("FREQ_WINDOW"), B_FLOATING_WINDOW_LOOK,
+		B_FLOATING_APP_WINDOW_FEEL, B_NOT_RESIZABLE | B_NOT_ZOOMABLE
+		| B_AUTO_UPDATE_SIZE_LIMITS)
 {
-	BRect r(0,0,180,180);
-	ResizeTo(r.Width(), r.Height());
-	MoveBy(-r.Width()/2, -r.Height()/2);
-
-	view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
-	r.InsetBy(8,8);
-	r.right = 70;
-
-	r.top += 28;		// space for the textbox
-	list = new BListView(r,"Freq list");
-	BScrollView *sv = new BScrollView("scroll", list, B_FOLLOW_ALL_SIDES, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
+	list = new BListView("Freq list");
+	BScrollView *sv = new BScrollView("scroll", list, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
+	sv->SetExplicitMinSize(BSize(0, 100));
 	sv->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	sv->MakeFocus(false);
-	view->AddChild(sv);
+
+
+	text = new BSpinner("SpinerControl", NULL, new BMessage(SET_TEXT));
+	text->SetRange(4000, 96000);
+	text->SetValue(44100);
+
+	BLayoutBuilder::Group<>(this, B_VERTICAL)
+		.SetInsets(B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING)
+		.Add(text)
+		.Add(sv)
+		.AddGroup(B_HORIZONTAL)
+			.Add(new BButton( NULL, Language.get("CANCEL"), new BMessage(B_QUIT_REQUESTED)))
+			.Add(new BButton(NULL, Language.get("OK"), new BMessage(SET)))
+		.End();
 	
-	r.Set(4,8,85,28);
-	text = new SpinControl(r, NULL, NULL, new BMessage(SET_TEXT), 4000, 96000, 44100, 500);
-	view->AddChild(text);
-
-	r = Bounds();
-	r.left = r.right - 85;
-	r.top = r.bottom - 32;
-	r.bottom -=8;
-	r.right -= 8;
-	view->AddChild(new BButton(r, NULL, Language.get("OK"), new BMessage(SET)) );
-	r.OffsetBy(0,-30);
-	view->AddChild(new BButton(r, NULL, Language.get("CANCEL"), new BMessage(QUIT)) );
-
-	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
-	AddChild(view);
 
 	BStringItem *it;
 	list->AddItem(it = new BStringItem("96000"));

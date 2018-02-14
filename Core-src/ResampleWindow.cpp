@@ -26,6 +26,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -50,97 +51,82 @@
 /*******************************************************
 *   
 *******************************************************/
-ResampleWindow::ResampleWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Language.get("RESAMPLE_WINDOW"),B_FLOATING_WINDOW_LOOK,B_MODAL_APP_WINDOW_FEEL, B_NOT_RESIZABLE|B_NOT_ZOOMABLE)
+ResampleWindow::ResampleWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),
+	Language.get("RESAMPLE_WINDOW"), B_FLOATING_WINDOW_LOOK,
+	B_MODAL_APP_WINDOW_FEEL, B_NOT_RESIZABLE | B_NOT_ZOOMABLE
+	| B_AUTO_UPDATE_SIZE_LIMITS)
 {
 	m_frequency = Pool.frequency;
 
-	BRect rect(0,0,350,200);
-	ResizeTo(rect.Width(), rect.Height());
-	MoveBy(-rect.Width()/2, -rect.Height()/2);
 
 // The SampleRate Box
-	view = new BView(rect, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
-	rect.InsetBy(8,8);
-	rect.right = 110;
-	BBox *rate_box = new BBox(rect, NULL);
+	view = new BView(NULL, B_WILL_DRAW);
+	BBox *rate_box = new BBox(B_EMPTY_STRING);
 	rate_box->SetLabel(Language.get("RATE"));
-	BRect r = rate_box->Bounds();
-	r.InsetBy(8,8);
 
-	r.top += 36;		// space for the textbox
-	r.right -= B_V_SCROLL_BAR_WIDTH;
-	list = new BListView(r,"Freq list");
-	BScrollView *sv = new BScrollView("scroll", list, B_FOLLOW_ALL_SIDES, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
+	list = new BListView("Freq list");
+	BScrollView *sv = new BScrollView("scroll", list, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
 	sv->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	sv->MakeFocus(false);
-	rate_box->AddChild(sv);
-	
-	r.right += B_V_SCROLL_BAR_WIDTH;
-	r.top = 18;	r.bottom = 38;
-	r.left -= 4;
-	text = new SpinControl(r, NULL, NULL, new BMessage(SET_TEXT), 4000, 48000, 44100, 500);
-	rate_box->AddChild(text);
-	view->AddChild(rate_box);
+
+	text = new BSpinner(NULL, NULL, new BMessage(SET_TEXT));
+	text->SetRange(4000, 48000);
+	text->SetValue(44100);
+
+	BGroupLayout* rateBoxLayout = BLayoutBuilder::Group<>(B_VERTICAL)
+		.SetInsets(B_USE_WINDOW_INSETS, B_USE_WINDOW_INSETS,
+			B_USE_WINDOW_INSETS, B_USE_WINDOW_INSETS)
+		.Add(text)
+		.Add(sv);
+
+	rate_box->AddChild(rateBoxLayout->View());
 
 // The Channels
-	rect.left = rect.right+8;
-	rect.right = Bounds().right-8;
-	rect.bottom -= 32;
-	
-	r = rect;
-	r.bottom = 130;
-	r.right = 250;
-	BBox *c_box = new BBox(r, NULL);
+	BBox *c_box = new BBox(B_EMPTY_STRING);
 	c_box->SetLabel(Language.get("CHANNELS"));
-	r = c_box->Bounds();
-	r.InsetBy(8,8);
-	r.OffsetBy(0,8);
-	r.bottom = r.top + 19;
-	c_box->AddChild(mono = new BRadioButton(r, NULL, Language.get("MONO"), new BMessage(CHANGE_CHANNEL)));
+	mono = new BRadioButton(NULL, Language.get("MONO"), new BMessage(CHANGE_CHANNEL));
+
 	if (Pool.sample_type == MONO)	mono->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,20);
-	c_box->AddChild(stereo = new BRadioButton(r, NULL, Language.get("STEREO"), new BMessage(CHANGE_CHANNEL)));
+	stereo = new BRadioButton(NULL, Language.get("STEREO"), new BMessage(CHANGE_CHANNEL));
+
 	if (Pool.sample_type == STEREO)	stereo->SetValue(B_CONTROL_ON);
 
-	float x = 8 + MAX( be_plain_font->StringWidth(Language.get("LEFT_MIX")), be_plain_font->StringWidth(Language.get("RIGHT_MIX")));
-	r.OffsetBy(0,30);
-	if (Pool.sample_type==MONO){
-		c_box->AddChild(left = new SpinControl(r, NULL, Language.get("LEFT_MIX"), NULL, 0, 400, Prefs.filter_resample_sl, 1));
-		r.OffsetBy(0,24);
-		c_box->AddChild(right = new SpinControl(r, NULL, Language.get("RIGHT_MIX"), NULL, 0, 400, Prefs.filter_resample_sr, 1));
-	}else{
-		c_box->AddChild(left = new SpinControl(r, NULL, Language.get("LEFT_MIX"), NULL, 0, 400, Prefs.filter_resample_ml, 1));
-		r.OffsetBy(0,24);
-		c_box->AddChild(right = new SpinControl(r, NULL, Language.get("RIGHT_MIX"), NULL, 0, 400, Prefs.filter_resample_mr, 1));
-	}
+	left = new BSpinner(NULL, Language.get("LEFT_MIX"), NULL);
+	left->SetRange(0, 400);
+	left->SetValue(Pool.sample_type == MONO ? Prefs.filter_resample_sl : Prefs.filter_resample_sr);
+
+	right = new BSpinner(NULL, Language.get("RIGHT_MIX"), NULL);
+	right->SetRange(0, 400);
+	right->SetValue(Pool.sample_type == MONO ? Prefs.filter_resample_ml : Prefs.filter_resample_mr);
+
 	left->SetEnabled(false);
 	right->SetEnabled(false);
-	left->SetDivider(x);
-	right->SetDivider(x);
-	view->AddChild(c_box);
+
+	BGroupLayout* channelBoxLayout = BLayoutBuilder::Group<>(B_VERTICAL)
+		.SetInsets(B_USE_WINDOW_INSETS, B_USE_WINDOW_INSETS,
+			B_USE_WINDOW_INSETS, B_USE_WINDOW_INSETS)
+		.Add(mono)
+		.Add(stereo)
+		.AddGrid()
+			.Add(left->CreateLabelLayoutItem(), 0, 0)
+			.Add(left->CreateTextViewLayoutItem(), 1, 0)
+			.Add(right->CreateLabelLayoutItem(), 0, 1)
+			.Add(right->CreateTextViewLayoutItem(), 1, 1)
+		.End();
+
+	c_box->AddChild(channelBoxLayout->View());
 
 // the resolution
-	r = rect;
-	r.bottom = 130;
-	r.left = 258;
-	BBox *r_box = new BBox(r, NULL);
+	BBox *r_box = new BBox(B_EMPTY_STRING);
 	r_box->SetLabel(Language.get("RESOLUTION"));
-	r = r_box->Bounds();
-	r.InsetBy(8,8);
-	r.top += 36;		// space for the textbox
-	r.right -= B_V_SCROLL_BAR_WIDTH;
-	resolution = new BListView(r,"Bits list");
-	sv = new BScrollView("scroll", resolution, B_FOLLOW_ALL_SIDES, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
+	resolution = new BListView("Bits list");
+	sv = new BScrollView("scroll", resolution, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
 	sv->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	sv->MakeFocus(false);
-	r_box->AddChild(sv);
 	
-	r.right += B_V_SCROLL_BAR_WIDTH;
-	r.top = 18;	r.bottom = 38;
-	r.left -= 4;
-	bits = new SpinControl(r, NULL, NULL, new BMessage(SET_BITS), 4, 32, Pool.sample_bits, 1);
-	r_box->AddChild(bits);
-	view->AddChild(r_box);
+	bits = new BSpinner(NULL, NULL, new BMessage(SET_BITS));
+	bits->SetRange(4, 32);
+	bits->SetValue(Pool.sample_bits);
 
 	BStringItem *it;
 	resolution->AddItem(it = new BStringItem("8"));
@@ -153,18 +139,7 @@ ResampleWindow::ResampleWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Langua
 	resolution->SetInvocationMessage(new BMessage(SELECT_BITS));
 	m_bits = Pool.sample_bits;
 
-	r = Bounds();
-	r.left = r.right - 80;
-	r.top = r.bottom - 32;
-	r.bottom -=8;
-	r.right -= 8;
-	view->AddChild(new BButton(r, NULL, Language.get("APPLY"), new BMessage(SET)) );
-//	r.OffsetBy(-(r.Width()+8), 0);
-	r.OffsetBy(0,-30);
-	view->AddChild(new BButton(r, NULL, Language.get("CANCEL"), new BMessage(B_QUIT_REQUESTED)) );
-
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
-	AddChild(view);
 
 //	list->AddItem(new BStringItem("96000"));
 //	list->AddItem(new BStringItem("64000"));
@@ -180,6 +155,26 @@ ResampleWindow::ResampleWindow(BPoint p) : BWindow(BRect(p.x,p.y,p.x,p.y),Langua
 	list->SetInvocationMessage(new BMessage(SELECT));
 	SetList(true);
 
+	BGroupLayout* resolutionBoxLayout = BLayoutBuilder::Group<>(B_VERTICAL)
+		.SetInsets(B_USE_WINDOW_INSETS, B_USE_WINDOW_INSETS,
+			B_USE_WINDOW_INSETS, B_USE_WINDOW_INSETS)
+		.Add(bits)
+		.Add(sv);
+
+	r_box->AddChild(resolutionBoxLayout->View());
+
+	BLayoutBuilder::Group<>(this, B_VERTICAL)
+		.SetInsets(B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING, B_USE_DEFAULT_SPACING)
+		.AddGroup(B_HORIZONTAL)
+			.Add(rate_box)
+			.Add(c_box)
+			.Add(r_box)
+		.End()
+		.AddGroup(B_HORIZONTAL)
+			.AddGlue()
+			.Add(new BButton( NULL, Language.get("CANCEL"), new BMessage(B_QUIT_REQUESTED)))
+			.Add(new BButton(NULL, Language.get("APPLY"), new BMessage(SET)))
+		.End();
 	Run();
 	Show();
 }

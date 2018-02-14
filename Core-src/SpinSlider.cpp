@@ -56,11 +56,8 @@ SpinSlider::SpinSlider(const char *name, const char *label,
 	m_slider = new BSlider("SliderControl", B_EMPTY_STRING,
 					new BMessage(MSG_SLIDER_CHANGED), minValue, maxValue, B_HORIZONTAL, thumbType);
 	m_slider->SetModificationMessage(new BMessage(MSG_SLIDER_CHANGED));
-	m_spinner = new BDecimalSpinner("SpinerControl", NULL, new BMessage(MSG_SPIN_CHANGED));
-	m_spinner->SetMinValue(minValue);
-	m_spinner->SetMaxValue(maxValue);
-	m_spinner->SetPrecision(0);
-	m_spinner->SetStep(1);
+	m_spinner = new BSpinner("SpinerControl", NULL, new BMessage(MSG_SPIN_CHANGED));
+	m_spinner->SetRange(minValue, maxValue);
 
 	BLayoutBuilder::Group<>(this, B_VERTICAL, 0)
 		.Add(new BStringView("label", label))

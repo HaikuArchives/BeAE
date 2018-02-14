@@ -33,7 +33,7 @@
 #include <AppKit.h>
 #include <InterfaceKit.h>
 #include <String.h>
-#include "SpinControl.h"
+#include <Spinner.h>
 
 class FreqWindow : public BWindow {
 public:
@@ -47,6 +47,6 @@ private:
 	float m_old;
 	BView *view;
 	BListView *list;
-	SpinControl *text;
+	BSpinner *text;
 };
 #endif
