@@ -26,6 +26,8 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
+
 #include <stdio.h>
 #include <File.h>
 
@@ -168,13 +170,8 @@ void RunFilter(int32 filter)
 		BView *view = pFilter->ConfigView();
 		if (view){
 			// run with GUI
-			
-			// resize the window
-			pFilter->ResizeTo( view->Bounds().Width(), view->Bounds().Height() + 40);
-			// add the config view
-			if (view->Bounds().Width()<FILTER_MIN_WIDTH)
-				view->MoveBy( (FILTER_MIN_WIDTH - view->Bounds().Width())/2, 0);
-			pFilter->ChildAt(0)->AddChild(view);
+			pFilter->GetLayout()->AddView(0, view);
+
 			pFilter->MoveTo( Pool.mainWindow->Frame().left +__FilterCount * 40 +40, Pool.mainWindow->Frame().top + 80 + __FilterCount * 20);
 			
 			pFilter->Run();			// start looper

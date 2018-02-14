@@ -25,7 +25,8 @@
 	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
+#include <DecimalSpinner.h>
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -52,16 +53,15 @@ NormalizeFilter::NormalizeFilter() : RealtimeFilter(Language.get("NORMALIZE"), f
 *******************************************************/
 BView *NormalizeFilter::ConfigView()
 {
-	BRect r(0,0,180,80);
-
-	BView *view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
+	BView *view = new BView(NULL, B_WILL_DRAW);
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
-	r.InsetBy(8,8);
-	r.bottom = r.top + 19;
-	value = new SpinControl(r, NULL, Language.get("NORMALIZE_LEVEL"), NULL, 1, 100, Prefs.filter_normalize, 1);
-	value->SetDivider(120);
-	view->AddChild(value);
+	value = new SpinSlider(NULL, Language.get("NORMALIZE_LEVEL"), new BMessage(CONTROL_CHANGED), 1, 100);
+	value->SetValue(Prefs.filter_normalize);
+
+	BLayoutBuilder::Group<>(view, B_VERTICAL, 0)
+		.Add(value)
+		.End();
 
 	return view;
 }

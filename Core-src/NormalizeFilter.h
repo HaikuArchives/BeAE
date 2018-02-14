@@ -39,7 +39,7 @@ class NormalizeFilter : public RealtimeFilter {
 	virtual BView *ConfigView();
    
   private:
-	SpinControl *value;
+	SpinSlider *value;
 	float max_left, max_right;
 	float min_left, min_right;
 	float power_left, power_right;

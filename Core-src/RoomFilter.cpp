@@ -26,6 +26,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <View.h>
 #include <InterfaceKit.h>
@@ -50,26 +51,23 @@ RoomWindow::RoomWindow(bool b) : RealtimeFilter(Language.get("ROOM"), b)
 *******************************************************/
 BView *RoomWindow::ConfigView()
 {
-	BRect r(0,0,200,140);
-
-	BView *view = new BView(r, NULL, B_FOLLOW_ALL, B_WILL_DRAW);
+	BView *view = new BView(NULL, B_WILL_DRAW);
 	view->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
-	r.InsetBy(8,8);
-	r.bottom = r.top + 23;
-	delay = new SpinSlider(r, NULL, Language.get("DELAY_MS"), new BMessage(CONTROL_CHANGED), 1, 500);
+	delay = new SpinSlider(NULL, Language.get("DELAY_MS"), new BMessage(CONTROL_CHANGED), 1, 500);
 	delay->SetValue(Prefs.filter_room_delay * 1000);
-	view->AddChild(delay);
 
-	r.OffsetBy(0,40);
-	damping = new SpinSlider(r, NULL, Language.get("DAMPING"), new BMessage(CONTROL_CHANGED), 1, 100);
+	damping = new SpinSlider(NULL, Language.get("DAMPING"), new BMessage(CONTROL_CHANGED), 1, 100);
 	damping->SetValue(Prefs.filter_room_damping * 200);
-	view->AddChild(damping);
 
-	r.OffsetBy(0,40);
-	gain = new SpinSlider(r, NULL, Language.get("GAIN"), new BMessage(CONTROL_CHANGED), 1, 100);
+	gain = new SpinSlider(NULL, Language.get("GAIN"), new BMessage(CONTROL_CHANGED), 1, 100);
 	gain->SetValue(Prefs.filter_room_gain * 200);
-	view->AddChild(gain);
+
+	BLayoutBuilder::Group<>(view, B_VERTICAL)
+		.Add(delay)
+		.Add(damping)
+		.Add(gain)
+		.End();
 
 	return view;
 }
