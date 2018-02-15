@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <View.h>
 
+#include "ByteSwap.h"
 #include "Globals.h"
 #include "MainWindow.h"
 #include "main.h"
@@ -150,7 +151,7 @@ void MyApplication::RefsReceived(BMessage *message)
 			Pool.update_index = true;
 			Pool.RedrawWindow();
 			play_cookie.pause = true;
-
+			ByteSwap *byteSwap = NULL;
 			// gather the necessary format information
 			int32 tracks = inFile.CountTracks();
 			for (int32 i = 0; i < tracks; i++) {
@@ -163,13 +164,18 @@ void MyApplication::RefsReceived(BMessage *message)
 
 //					Pool.m_format = format;
 					memcpy(&Pool.m_format, &format, sizeof(Pool.m_format));
-
 					Pool.sample_bits = (format.u.raw_audio.format & 0xf)*8;
 					Pool.selection = NONE;
 					Pool.frequency = format.u.raw_audio.frame_rate;
 
 //					printf("format : %x\n", format.u.raw_audio.format);
 
+					if (format.u.raw_audio.byte_order != B_MEDIA_HOST_ENDIAN) {
+						if (format.u.raw_audio.format == media_raw_audio_format::B_AUDIO_FLOAT
+							|| format.u.raw_audio.format == media_raw_audio_format::B_AUDIO_INT
+							|| format.u.raw_audio.format == media_raw_audio_format::B_AUDIO_SHORT)
+							byteSwap = new ByteSwap(format.u.raw_audio.format);
+					}
 					Pool.size = audTrack->CountFrames()-1;
 					channels = format.u.raw_audio.channel_count;
 
@@ -226,9 +232,12 @@ void MyApplication::RefsReceived(BMessage *message)
 					count += framesRead;			// now correct for crashes if bigger than file
 					if (count > frameCount)
 						framesRead -= (count - frameCount);
-		
+
+					if(byteSwap != NULL)
+						byteSwap->Swap(buffer, format.u.raw_audio.buffer_size);
+
 					switch(format.u.raw_audio.format){
-					case 0x24:	// 0 == mid, -1.0 == bottom, 1.0 == top (the preferred format for non-game audio)
+					case media_raw_audio_format::B_AUDIO_FLOAT:	// 0x24  0 == mid, -1.0 == bottom, 1.0 == top (the preferred format for non-game audio)
 					{	float *tmp = (float*)buffer;
 						float x;
 						for (int32 count = 0; count<framesRead*channels; count++){
@@ -238,17 +247,17 @@ void MyApplication::RefsReceived(BMessage *message)
 							*mem++ = x;
 						}
 					}	break;
-					case 0x4:	// 0 == mid, 0x80000001 == bottom, 0x7fffffff == top (all >16-bit formats, left-adjusted)
+					case media_raw_audio_format::B_AUDIO_INT:	// 0x4  0 == mid, 0x80000001 == bottom, 0x7fffffff == top (all >16-bit formats, left-adjusted)
 					{	int32 *tmp = (int32*)buffer;
 						float x;
 						for (int32 count = 0; count<framesRead*channels; count++){
-							x = *tmp++/0x80000000;
+							x = *tmp++ / 0x80000000;
 							if (x<-1.0)		x = -1.0;
 							else if (x>1.0)	x = 1.0;
 							*mem++ = x;
 						}
 					}	break;
-					case 0x2:	// 0 == mid, -32767 == bottom, +32767 == top
+					case media_raw_audio_format::B_AUDIO_SHORT:	// 0x2  0 == mid, -32767 == bottom, +32767 == top
 					{	int16 *tmp = (int16*)buffer;
 						float x;
 						for (int32 count = 0; count<framesRead*channels; count++){
@@ -258,7 +267,7 @@ void MyApplication::RefsReceived(BMessage *message)
 							*mem++ = x;
 						}
 					}	break;
-					case 0x11:	// 128 == mid, 1 == bottom, 255 == top (discouraged but supported format)
+					case media_raw_audio_format::B_AUDIO_UCHAR:	// 0x11  128 == mid, 1 == bottom, 255 == top (discouraged but supported format)
 					{	uint8 *tmp = (uint8*)buffer;
 						float x;
 						for (int32 count = 0; count<framesRead*channels; count++){
@@ -268,7 +277,7 @@ void MyApplication::RefsReceived(BMessage *message)
 							*mem++ = x;
 						}
 					}	break;
-					case 0x1:		// 0 == mid, -127 == bottom, +127 == top (not officially supported format)
+					case media_raw_audio_format::B_AUDIO_CHAR:		// 0x1  0 == mid, -127 == bottom, +127 == top (not officially supported format)
 					{	int8 *tmp = (int8*)buffer;
 						float x;
 						for (int32 count = 0; count<framesRead*channels; count++){
