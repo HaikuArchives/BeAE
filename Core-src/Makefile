@@ -30,7 +30,7 @@ APP_MIME_SIG =
 #	same name (source.c or source.cpp) are included from different directories.
 #	Also note that spaces in folder names do not work well with this Makefile.
 SRCS = AboutBox.cpp AmplifierFilter.cpp AnalyzeWindow.cpp BassBoostFilter.cpp \
-	BigView.cpp BitmapDrawer.cpp CommonClass.cpp CommonPool.cpp CompressorFilter.cpp \
+	BigView.cpp ByteSwap.cpp BitmapDrawer.cpp CommonClass.cpp CommonPool.cpp CompressorFilter.cpp \
 	DelayWindow.cpp Filters.cpp FreqWindow.cpp History.cpp IndexView.cpp LimiterFilter.cpp \
 	MainWindow.cpp MyClipBoard.cpp NormalizeFilter.cpp OpenPanel.cpp PeakFile.cpp \
 	PointersView.cpp PrefColors.cpp PrefGeneral.cpp PrefKeys.cpp PrefView.cpp \
