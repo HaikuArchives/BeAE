@@ -232,8 +232,6 @@ void ToolBarView::AttachedToWindow()
 void ToolBarView::Draw(BRect r)
 {
 	r = Bounds();
-	SetHighColor(255,255,255);
-	StrokeLine(BPoint(r.left, r.top), BPoint(r.right, r.top));
 	SetHighColor(64,64,64);
 	StrokeLine(BPoint(r.left, r.bottom), BPoint(r.right, r.bottom));
 
