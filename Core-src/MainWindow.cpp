@@ -443,13 +443,13 @@ MainWindow::MainWindow(BRect frame)
 	AddChild(pointer_view = new PointersView(r));
 
 	r = Bounds();					// Toolbar
-	r.top += 20;
-	r.bottom = r.top+32;
+	r.top += mainMenuBar->Bounds().Height() + 1;
+	r.bottom = r.top + 32;
 	r.right = 3000;
 	AddChild(toolBar = new ToolBarView(r));
 
 	r = Bounds();					// Big LCD
-	r.top = r.bottom -62;
+	r.top = r.bottom - 62;
 	r.left = 261;
 	r.right -= 260;
 	AddChild(new BigView(r));
@@ -457,7 +457,7 @@ MainWindow::MainWindow(BRect frame)
 
 // sample Views
 	BRect sv = Bounds();
-	sv.top += (21+32);
+	sv.top += ((mainMenuBar->Bounds().Height() + 2) +32);
 	sv.bottom -= 63;
 
 	r = sv;							// wave display
