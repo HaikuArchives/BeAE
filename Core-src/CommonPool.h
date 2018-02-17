@@ -171,7 +171,6 @@ class CommonPool{
 
 private:
 
-	bool Expired();
 	static int32 _LoadFilters_(void *data){
 		((CommonPool*)(data))->LoadFilters();
 		return B_OK;
@@ -180,7 +179,6 @@ private:
 
 	bool m_playing;			// is there any playback ?
 
-	bool expired;
 	BList Filters;
 	BMenu *importmenu; // hack	
 };

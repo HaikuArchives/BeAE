@@ -36,7 +36,6 @@
 
 #include "Globals.h"
 #include "PrefGeneral.h"
-#include "SpinControl.h"
 
 #define BOOL_CHANGED				'shwG'
 #define PEAK_LEVEL					'peak'
@@ -72,7 +71,10 @@ PrefGeneral::PrefGeneral(BRect frame):BView(frame, "Prefs general", B_FOLLOW_ALL
 	if (Prefs.show_peak)	c_peak->SetValue(B_CONTROL_ON);
 	r.OffsetBy(0,18);
 	r.right *= .6;
-	AddChild(s_peak = new SpinControl(r, NULL, Language.get("PEAKLEVEL"), new BMessage(PEAK_LEVEL), 1, 100, Prefs.peak*100, 2));
+	AddChild(s_peak = new BSpinner(r, NULL, Language.get("PEAKLEVEL"), new BMessage(PEAK_LEVEL)));
+	s_peak->SetRange(1, 100);
+	s_peak->SetValue(Prefs.peak*100);
+
 	r.right = right;
 	s_peak->SetDivider(r.Width()*.4);
 
@@ -115,7 +117,9 @@ PrefGeneral::PrefGeneral(BRect frame):BView(frame, "Prefs general", B_FOLLOW_ALL
 	temp_file->SetDivider(r.Width()*.4);
 
 	r.OffsetBy(0,24);
-	AddChild(s_free = new SpinControl(r, NULL, Language.get("KEEP_FREE"), new BMessage(SPIN_CHANGED), 10, 10000, Prefs.keep_free, 10));
+	AddChild(s_free = new BSpinner(r, NULL, Language.get("KEEP_FREE"), new BMessage(SPIN_CHANGED)));
+	s_free->SetRange(10, 10000);
+	s_free->SetValue(Prefs.keep_free);
 	r.right = right;
 	s_free->SetDivider(r.Width()*.74);
 

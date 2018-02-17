@@ -35,7 +35,6 @@
 #include <String.h>
 
 #include "AnalyzeWindow.h"
-#include "SpinControl.h"
 #include "SpinSlider.h"
 
 #define QUIT			'quit'

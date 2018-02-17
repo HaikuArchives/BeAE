@@ -36,7 +36,7 @@ SRCS = AboutBox.cpp AmplifierFilter.cpp AnalyzeWindow.cpp BassBoostFilter.cpp \
 	PointersView.cpp PrefColors.cpp PrefGeneral.cpp PrefKeys.cpp PrefView.cpp \
 	PrefWindow.cpp Preferences.cpp ProgressWindow.cpp RealtimeFilter.cpp ResampleWindow.cpp \
 	ReverbWindow.cpp RoomFilter.cpp SampleScopeWindow.cpp SampleView.cpp SavePanel.cpp \
-	Shortcut.cpp SpectrumWindow.cpp SpinButton.cpp SpinControl.cpp SpinSlider.cpp \
+	Shortcut.cpp SpectrumWindow.cpp SpinSlider.cpp \
 	SwatchView.cpp TimeBarView.cpp ToolBarView.cpp TransportView.cpp VMSystem.cpp \
 	VUView.cpp ValuesView.cpp YLanguageClass.cpp YPreferences.cpp main.cpp
 

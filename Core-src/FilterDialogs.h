@@ -34,8 +34,8 @@
 #include <InterfaceKit.h>
 #include <Spinner.h>
 #include <String.h>
+
 #include "RealtimeFilter.h"
-#include "SpinControl.h"
 #include "SpinSlider.h"
 
 #define QUIT			'quit'

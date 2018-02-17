@@ -32,7 +32,7 @@
 #include <Application.h>
 #include <AppKit.h>
 #include <InterfaceKit.h>
-#include "SpinControl.h"
+#include <Spinner.h>
 
 class PrefGeneral : public BView {
   public:
@@ -44,7 +44,7 @@ class PrefGeneral : public BView {
   	void AddLanguageMenu();
 	BPopUpMenu	*langmenu, *time;
 	BCheckBox *c_grid, *c_paste, *c_play, *c_double, *c_peak, *c_follow_playing, *c_drag_drop;
-	SpinControl *s_peak, *s_free;
+	BSpinner *s_peak, *s_free;
 	BTextControl *temp_file;
 	BMenuItem *menu_sample, *menu_time;
 };
