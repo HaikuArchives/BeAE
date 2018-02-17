@@ -39,7 +39,7 @@ class MainWindow : public BWindow {
 	virtual	~MainWindow();
 	virtual bool QuitRequested();
 	virtual void MessageReceived(BMessage *message);
-	
+	virtual	void MenusBeginning();
 	void UpdateRecent();
 	ToolBarView	*toolBar;
 

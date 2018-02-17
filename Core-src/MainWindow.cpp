@@ -619,6 +619,11 @@ MainWindow::~MainWindow()
 {
 }
 
+void MainWindow::MenusBeginning()
+{
+	Pool.UpdateMenu();
+}
+
 void MainWindow::UpdateRecent()
 {
 	BMenuItem *menuItem;
@@ -674,7 +679,6 @@ void MainWindow::MessageReceived(BMessage *message)
 			delete mainMenuBar;
 		}
 		AddMenu();
-		Pool.UpdateMenu();
 		break;
 
 	case TRANSPORT_PAUSE_MAN:
@@ -840,7 +844,7 @@ void MainWindow::MessageReceived(BMessage *message)
 				Pool.l_pointer = 0;
 		}
 		Pool.update_index = true;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.RedrawWindow();
 		break;
 	case ZOOM_OUT:
@@ -858,7 +862,7 @@ void MainWindow::MessageReceived(BMessage *message)
 			if (Pool.l_pointer<0)
 				Pool.l_pointer = 0;
 		}
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.update_index = true;
 		Pool.RedrawWindow();
 		break;
@@ -866,7 +870,7 @@ void MainWindow::MessageReceived(BMessage *message)
 		if (Pool.size == 0)	break;
 		Pool.l_pointer = 0;
 		Pool.r_pointer = Pool.size;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.update_index = true;
 		Pool.RedrawWindow();
 		break;
@@ -876,7 +880,7 @@ void MainWindow::MessageReceived(BMessage *message)
 			Pool.l_pointer = Pool.pointer;
 			Pool.r_pointer = Pool.r_sel_pointer;
 		}
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.update_index = true;
 		Pool.RedrawWindow();
 		break;
@@ -887,7 +891,7 @@ void MainWindow::MessageReceived(BMessage *message)
 		if (Pool.l_pointer<0)	Pool.l_pointer = 0;
 		Pool.r_pointer = Pool.l_pointer + x;
 
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.update_index = true;
 		Pool.RedrawWindow();
 		break;
@@ -902,7 +906,7 @@ void MainWindow::MessageReceived(BMessage *message)
 			Pool.l_pointer = Pool.r_pointer - x;
 		}
 
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.update_index = true;
 		Pool.RedrawWindow();
 		break;
@@ -910,19 +914,19 @@ void MainWindow::MessageReceived(BMessage *message)
 	case EDIT_L:
 		if (Pool.selection != NONE)
 			Pool.selection = LEFT;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		sample_view->Draw(sample_view->Bounds());
 		break;	
 	case EDIT_R:
 		if (Pool.selection != NONE)
 			Pool.selection = RIGHT;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		sample_view->Draw(sample_view->Bounds());
 		break;	
 	case EDIT_B:
 		if (Pool.selection != NONE)
 			Pool.selection = BOTH;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		sample_view->Draw(sample_view->Bounds());
 		break;	
 
@@ -1002,7 +1006,7 @@ void MainWindow::MessageReceived(BMessage *message)
 	
 	case UNDO_ENABLE:
 		Prefs.save_undo = !Prefs.save_undo;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		break;
 	
 	case ABOUT:
@@ -1078,22 +1082,22 @@ void MainWindow::MessageReceived(BMessage *message)
 	
 	case TOOL_SELECT:
 		Pool.tool_mode = SELECT_TOOL;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		break;
 
 	case TOOL_DRAW:
 		Pool.tool_mode = DRAW_TOOL;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		break;
 
 	case TOOL_PLAY:
 		Pool.tool_mode = PLAY_TOOL;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		break;
 
 	case TOOL_JOGG:
 		Pool.tool_mode = SCRUB_TOOL;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		break;
 
 	case SPECTRUM:
@@ -1120,7 +1124,7 @@ void MainWindow::MessageReceived(BMessage *message)
 		if (!Pool.PrepareFilter())	break;
 		ClipBoard.DoSilence();
 		Pool.changed = true;
-		Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		Pool.HideProgress();
 		Pool.ResetIndexView();
 		Pool.RedrawWindow();

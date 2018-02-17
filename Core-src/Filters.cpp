@@ -267,7 +267,7 @@ void ExecuteFilter(RealtimeFilter *pFilter)
 	pFilter->Quit();
 
 	Pool.ResetIndexView();
-	Pool.UpdateMenu();
+	Pool.UpdateToolBar();
 	Pool.RedrawWindow();
 }
 
@@ -399,7 +399,7 @@ void DoTrim()
 
 	Pool.changed = true;
 	Pool.ResetIndexView();
-	Pool.UpdateMenu();
+	Pool.UpdateToolBar();
 	Pool.RedrawWindow();
 }
 
@@ -599,7 +599,7 @@ void DoResample()
 	Pool.changed = true;
 	Peak.Init( Pool.size+1, (Pool.sample_type == MONO) );	// Init peakfile
 	Pool.ResetIndexView();
-	Pool.UpdateMenu();
+	Pool.UpdateToolBar();
 	Pool.RedrawWindow();
 }
 

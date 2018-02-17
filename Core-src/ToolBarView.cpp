@@ -225,7 +225,6 @@ void ToolBarView::AttachedToWindow()
 	r.OffsetBy(25,0);
 	AddChild( tool[19] = ToolBarButton( r, 26, Language.get("TOOL_JOGG"), new BMessage(TOOL_JOGG), B_TWO_STATE_BUTTON, this));
 
-	
 }
 
 //*****************************************************
