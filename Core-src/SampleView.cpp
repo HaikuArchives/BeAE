@@ -500,7 +500,7 @@ void SampleView::MouseDown(BPoint p)
 			// save undo data
 			if (Prefs.save_undo){
 				Hist.Save(H_REPLACE, Pool.l_pointer, Pool.r_pointer);
-				Pool.UpdateMenu();
+				Pool.UpdateToolBar();
 			}
 
 			edit_channel = NONE;	// needed to track stereo editing
@@ -575,7 +575,7 @@ void SampleView::MouseDown(BPoint p)
 	Pool.update_index = true;
 	Window()->FindView("Index view")->Invalidate();
 	Window()->FindView("Big view")->Invalidate();
-	Pool.UpdateMenu();
+	Pool.UpdateToolBar();
 }
 
 
@@ -749,7 +749,7 @@ void SampleView::MouseUp(BPoint p)
 	edit = false;
 	drag_border = false;
 	old.Set(-1,-1);
-	Pool.UpdateMenu();
+	Pool.UpdateToolBar();
 }
 
 //*****************************************************

@@ -148,7 +148,10 @@ class CommonPool{
 	
 	bool	PrepareFilter();		// to save undo-data, stop playing, check selection
 	
+	void	CreateMenu();			// create/recreate menu items
 	void	UpdateMenu();			// activate/deactivate menu items
+	void	UpdateToolBar();		// activate/deactivate toolBar and menuBar items
+
 	bool	changed;
 	int32	save_mode;				// 1-do load after save, 2-do quit after save
 	bool	IsChanged(int32 mode=1);			// checks to see if a file is changed after load

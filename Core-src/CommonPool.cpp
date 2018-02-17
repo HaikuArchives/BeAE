@@ -313,7 +313,7 @@ void CommonPool::SelectAll()
 		pointer = 0;
 		r_sel_pointer = size;
 		selection = BOTH;
-		UpdateMenu();
+		UpdateToolBar();
 		RedrawWindow();
 	}
 }
@@ -326,7 +326,7 @@ void CommonPool::DeSelectAll()
 	if (sample_type != NONE && Pool.selection != NONE){
 		selection = NONE;
 		r_sel_pointer = 0;
-		UpdateMenu();
+		UpdateToolBar();
 		RedrawWindow();
 	}
 }
@@ -354,7 +354,7 @@ void CommonPool::RedrawWindow()
 /*******************************************************
 *   Update the menus
 *******************************************************/
-void CommonPool::UpdateMenu()
+void CommonPool::CreateMenu()
 {
 	BMenuItem *menuItem = NULL;
 	mainWindow->Lock();
@@ -364,7 +364,7 @@ void CommonPool::UpdateMenu()
 		menu_transform->RemoveItem(menuItem);
 		delete menuItem;
 	}
-	
+	// This never worked move into update, if needed
 	if (Prefs.repeat_message)
 		menu_transform->AddItem(menuItem = new BMenuItem(Language.get(Prefs.repeat_tag.String()), new BMessage(RUN_LAST_FILTER), KeyBind.GetKey("REPEAT_ACTION"), KeyBind.GetMod("REPEAT_ACTION")));
 
@@ -401,9 +401,15 @@ void CommonPool::UpdateMenu()
 	
 	menu_analyze->AddItem(menuItem = new BMenuItem(Language.get("SPECTRUM_ANALYZER"), new BMessage(SPECTRUM), KeyBind.GetKey("SPECTRUM_ANALYZER"), KeyBind.GetMod("SPECTRUM_ANALYZER")));
 	menu_analyze->AddItem(menuItem = new BMenuItem(Language.get("SAMPLE_SCOPE"), new BMessage(SAMPLE_SCOPE), KeyBind.GetKey("SAMPLE_SCOPE"), KeyBind.GetMod("SAMPLE_SCOPE")));
+	mainWindow->Unlock();
+}
 
-	menu_transform->SetEnabled(sample_type != NONE);	// transform menu
-	menu_analyze->SetEnabled(sample_type != NONE);		// analyzers menu
+/*******************************************************
+*   Update the menus
+*******************************************************/
+void CommonPool::UpdateMenu()
+{
+	mainWindow->Lock();
 
 #ifdef __SAMPLE_STUDIO_LE
 	menu_generate->SetEnabled(false);					// generation menu
@@ -432,6 +438,39 @@ void CommonPool::UpdateMenu()
 	mn_copy_to_stack->SetEnabled(selection != NONE);	// copy to stack
 #endif
 
+
+// transform menu
+
+	BMessage *filter_msg;
+	int32 filter = 0;
+	char name[255];
+	while(__FilterList[filter].name != NULL)
+	{
+		if (strcmp(__FilterList[filter].name, "---") != 0)
+		{
+			// can do some stuff to organise menu here
+			filter_msg = new BMessage(RUN_FILTER);
+			filter_msg->AddInt32("filter", filter);
+			sprintf(name, Language.get(__FilterList[filter].name));
+			if ( __FilterList[filter].type & FILTER_GUI )
+				strcat(name, "...");
+			BMenuItem* menuItem = menu_transform->FindItem(name);
+			if (menuItem != NULL)
+				menuItem->SetEnabled( __FilterList[filter].type & Pool.sample_type );
+		}
+		filter++;
+	}
+	mainWindow->Unlock();
+}
+
+/*******************************************************
+*   Update the toolBar, renamed to UpdateMenuBarAndToolBar
+*******************************************************/
+void CommonPool::UpdateToolBar()
+{
+	mainWindow->Lock();
+	menu_transform->SetEnabled(sample_type != NONE);	// transform menu
+	menu_analyze->SetEnabled(sample_type != NONE);		// analyzers menu
 	((MainWindow*)mainWindow)->toolBar->Update();
 	mainWindow->Unlock();
 }
@@ -469,14 +508,14 @@ void CommonPool::SaveUndo()
 	if (selection==NONE || !Prefs.save_undo)	return;
 
 	Hist.Save(H_REPLACE, pointer, r_sel_pointer);
-	UpdateMenu();
+	UpdateToolBar();
 }
 
 void CommonPool::Undo()
 {
 	Hist.Restore();
 	Pool.ResetIndexView();
-	UpdateMenu();
+	UpdateToolBar();
 	RedrawWindow();
 }
 

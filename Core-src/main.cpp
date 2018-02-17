@@ -61,7 +61,8 @@ MyApplication::MyApplication():BApplication("application/x-vnd.BeAE-BeAE")
 	mainWindow = new MainWindow(rect);
 	fOpenPanel = new OpenPanel(this);
 	fSavePanel = new SavePanel(this);
-	Pool.UpdateMenu();
+	Pool.CreateMenu();
+	Pool.UpdateToolBar(); // TODO Should be UpdateMenuBar only transformation an analisys
 	mainWindow->Show();
 }
 
@@ -105,7 +106,8 @@ void MyApplication::MessageReceived(BMessage *message)
 		break;
 
 	case UPDATE_MENU:
-		Pool.UpdateMenu();
+		//Pool.UpdateMenu();
+		Pool.UpdateToolBar();
 		break;
 
 	case DROP_PASTE:
@@ -368,7 +370,7 @@ void MyApplication::RefsReceived(BMessage *message)
 	Pool.InitBufferPlayer( Pool.frequency );
 
 	play_cookie.pause = temp_pause;
-	Pool.UpdateMenu();
+	Pool.UpdateToolBar();
 	mainWindow->UpdateRecent();
 //	be_app->Unlock();
 }
