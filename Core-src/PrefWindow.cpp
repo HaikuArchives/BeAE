@@ -25,7 +25,7 @@
 	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
+#include <LayoutBuilder.h>
 #include <Window.h>
 #include <stdio.h>
 
@@ -40,9 +40,12 @@
 *
 *******************************************************/
 PrefWindow::PrefWindow():BWindow(BRect(100,100,600,450),
-	Language.get("PREFS"), B_TITLED_WINDOW, B_ASYNCHRONOUS_CONTROLS|B_NOT_RESIZABLE|B_NOT_ZOOMABLE)
+	Language.get("PREFS"), B_TITLED_WINDOW, B_ASYNCHRONOUS_CONTROLS /*|B_NOT_RESIZABLE*/
+	|B_NOT_ZOOMABLE|B_AUTO_UPDATE_SIZE_LIMITS)
 {
-	AddChild(new PrefView(Bounds()));
+	BLayoutBuilder::Group<>(this)
+		.AddGroup(B_VERTICAL, B_USE_DEFAULT_SPACING)
+			.Add(new PrefView());
 	Run();
 }
 
@@ -72,7 +75,9 @@ void PrefWindow::MessageReceived(BMessage *message){
 			tmpV->RemoveSelf();
 			delete tmpV;
 		}
-		AddChild(new PrefView(Bounds()));
+		BLayoutBuilder::Group<>(this)
+		.AddGroup(B_VERTICAL, B_USE_DEFAULT_SPACING)
+			.Add(new PrefView());
 		break;
 	
 	case SET_FACTORY:

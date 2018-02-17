@@ -38,7 +38,7 @@
 
 class PrefView : public BView {
   public:
-	PrefView(BRect);
+	PrefView();
 	~PrefView();
 	virtual void AttachedToWindow();
 	virtual void MessageReceived(BMessage*);

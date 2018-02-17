@@ -25,7 +25,7 @@
 	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
+#include <LayoutBuilder.h>
 #include <InterfaceKit.h>
 #include <StorageKit.h>
 #include <String.h>
@@ -47,56 +47,39 @@
 *   Setup the main view. Add in all the niffty components
 *   we have made and get things rolling
 *******************************************************/
-PrefGeneral::PrefGeneral(BRect frame):BView(frame, "Prefs general", B_FOLLOW_ALL, 0){
+PrefGeneral::PrefGeneral():BView("Prefs general", 0){
 	SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	
-	BRect r = frame;
-//	r.right /=2;
-	r.top = 5;	r.bottom = 25;
-	float right = r.right;
-	
 	langmenu = new BPopUpMenu(Language.Name());
-	BMenuField *menu;
-	r.right *= .75;
-	AddChild(menu = new BMenuField(r,NULL,Language.get("LANGUAGE"),langmenu));
-	r.right = right;
-	menu->SetDivider(be_plain_font->StringWidth(Language.get("LANGUAGE")) +10);
-	
-	
-	r.OffsetBy(0,30);
-	AddChild(c_grid = new BCheckBox(r, "grid", Language.get("SHOWGRID"), new BMessage(BOOL_CHANGED)));
+	BMenuField *menuLang = new BMenuField(NULL,Language.get("LANGUAGE"),langmenu);
+
+	c_grid = new BCheckBox("grid", Language.get("SHOWGRID"), new BMessage(BOOL_CHANGED));
 	if (Prefs.show_grid)	c_grid->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,18);
-	AddChild(c_peak = new BCheckBox(r, "peak", Language.get("SHOWPEAK"), new BMessage(BOOL_CHANGED)));
+
+	c_peak = new BCheckBox("peak", Language.get("SHOWPEAK"), new BMessage(BOOL_CHANGED));
 	if (Prefs.show_peak)	c_peak->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,18);
-	r.right *= .6;
-	AddChild(s_peak = new BSpinner(r, NULL, Language.get("PEAKLEVEL"), new BMessage(PEAK_LEVEL)));
+
+	s_peak = new BSpinner(NULL, Language.get("PEAKLEVEL"), new BMessage(PEAK_LEVEL));
 	s_peak->SetRange(1, 100);
 	s_peak->SetValue(Prefs.peak*100);
 
-	r.right = right;
-	s_peak->SetDivider(r.Width()*.4);
-
-	r.OffsetBy(0,28);
-	AddChild(c_paste = new BCheckBox(r, "paste", Language.get("SELECT_PASTE"), new BMessage(BOOL_CHANGED)));
+	c_paste = new BCheckBox("paste", Language.get("SELECT_PASTE"), new BMessage(BOOL_CHANGED));
 	if (Prefs.select_after_paste)	c_paste->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,18);
-	AddChild(c_follow_playing = new BCheckBox(r, "follow", Language.get("FOLLOW_PLAYING"), new BMessage(BOOL_CHANGED)));
+
+	c_follow_playing = new BCheckBox("follow", Language.get("FOLLOW_PLAYING"), new BMessage(BOOL_CHANGED));
 	if (Prefs.follow_playing)	c_follow_playing->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,18);
-	AddChild(c_play = new BCheckBox(r, "play", Language.get("PLAYONLOAD"), new BMessage(BOOL_CHANGED)));
+
+	c_play = new BCheckBox("play", Language.get("PLAYONLOAD"), new BMessage(BOOL_CHANGED));
 	if (Prefs.play_when_loaded)	c_play->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,18);
-	AddChild(c_double = new BCheckBox(r, "double", Language.get("SELECT_DOUBLE"), new BMessage(BOOL_CHANGED)));
+
+	c_double = new BCheckBox("double", Language.get("SELECT_DOUBLE"), new BMessage(BOOL_CHANGED));
 	if (Prefs.select_all_on_double)	c_double->SetValue(B_CONTROL_ON);
-	r.OffsetBy(0,18);
-	AddChild(c_drag_drop = new BCheckBox(r, "dragndrop", Language.get("DRAG_DROP"), new BMessage(BOOL_CHANGED)));
+
+	c_drag_drop = new BCheckBox("dragndrop", Language.get("DRAG_DROP"), new BMessage(BOOL_CHANGED));
 	if (Prefs.drag_drop)	c_drag_drop->SetValue(B_CONTROL_ON);
 
-	r.OffsetBy(0,28);
 	time = new BPopUpMenu(Language.get("TIMEDISPLAY"));
-	menu = new BMenuField(r,NULL,Language.get("TIMEDISPLAY"),time);
+	BMenuField *menuTime = new BMenuField(NULL,Language.get("TIMEDISPLAY"),time);
 
 	BMessage *m = new BMessage(SET_TIME);
 	m->AddInt32("time",DISPLAY_SAMPLES);
@@ -108,21 +91,26 @@ PrefGeneral::PrefGeneral(BRect frame):BView(frame, "Prefs general", B_FOLLOW_ALL
 	time->AddItem(menu_time = new BMenuItem(Language.get("TIME"), m));
 	if (Prefs.display_time == DISPLAY_TIME)	menu_time->SetMarked(true);
 
-	menu->SetDivider(be_plain_font->StringWidth(Language.get("TIMEDISPLAY")) +10);
-	AddChild(menu);
+	temp_file = new BTextControl(NULL, Language.get("TEMP_DIR"), Prefs.temp_dir.String(), new BMessage(SET_TEMP));
 
-	r.OffsetBy(0,28);
-	r.right *= .98;
-	AddChild(temp_file = new BTextControl(r, NULL, Language.get("TEMP_DIR"), Prefs.temp_dir.String(), new BMessage(SET_TEMP) ));
-	temp_file->SetDivider(r.Width()*.4);
-
-	r.OffsetBy(0,24);
-	AddChild(s_free = new BSpinner(r, NULL, Language.get("KEEP_FREE"), new BMessage(SPIN_CHANGED)));
+	s_free = new BSpinner(NULL, Language.get("KEEP_FREE"), new BMessage(SPIN_CHANGED));
 	s_free->SetRange(10, 10000);
 	s_free->SetValue(Prefs.keep_free);
-	r.right = right;
-	s_free->SetDivider(r.Width()*.74);
 
+	BLayoutBuilder::Group<>(this)
+		.AddGroup(B_VERTICAL, B_USE_DEFAULT_SPACING)
+		.SetInsets(B_USE_WINDOW_SPACING)
+			.Add(menuLang)
+			.Add(c_grid)
+			.Add(c_peak)
+			.Add(s_peak)
+			.Add(c_paste)
+			.Add(c_follow_playing)
+			.Add(c_double)
+			.Add(c_drag_drop)
+			.Add(menuTime)
+			.Add(temp_file)
+			.Add(s_free);
 }
 
 /*******************************************************

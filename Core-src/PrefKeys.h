@@ -35,7 +35,7 @@
 
 class PrefKeys : public BView {
   public:
-	PrefKeys(BRect);
+	PrefKeys();
 	~PrefKeys();
 	virtual void AttachedToWindow();
 	virtual void MessageReceived(BMessage*);
