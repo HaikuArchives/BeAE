@@ -36,7 +36,7 @@
 
 class PrefGeneral : public BView {
   public:
-	PrefGeneral(BRect);
+	PrefGeneral();
 	~PrefGeneral();
 	virtual void AttachedToWindow();
 	virtual void MessageReceived(BMessage*);

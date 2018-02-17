@@ -27,6 +27,7 @@
 */
 
 #include <InterfaceKit.h>
+#include <LayoutBuilder.h>
 #include <StorageKit.h>
 #include <String.h>
 #include <Path.h>
@@ -46,38 +47,52 @@
 *   Setup the main view. Add in all the niffty components
 *   we have made and get things rolling
 *******************************************************/
-PrefView::PrefView(BRect frame):BView(frame, "Prefs view", B_FOLLOW_ALL_SIDES, B_WILL_DRAW){
+PrefView::PrefView():BView("Prefs view", B_WILL_DRAW){
 	SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
 	// add the prefs list at the left
-	BRect r = Bounds();
-	r.right = 130;
-	r.top += 8;	r.left += 8;
-	r.bottom -= 40;
-	list = new BListView(r,"Prefs list");
-	BScrollView *sv = new BScrollView("scroll", list, B_FOLLOW_ALL_SIDES, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
+	list = new BListView("Prefs list");
+	BScrollView *sv = new BScrollView("scroll", list, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
 	sv->SetLowColor(255,0,0);
 	sv->MakeFocus(false);
-	AddChild(sv);  
 
-	r.left = sv->Bounds().right + 15;
-	r.right = Bounds().right - 8;
-	configBox = new BBox(r,"configbox");
+	configBox = new BBox("configbox");
 	configBox->SetLabel(" - ");
-	AddChild(configBox);
 
 	list->AddItem(new BStringItem(Language.get("GENERAL")));
 	list->AddItem(new BStringItem(Language.get("COLORSET")));
 	list->AddItem(new BStringItem(Language.get("KEYBINDINGS")));
 
-	r = Bounds();
-	AddChild(new BButton(BRect(r.right-120,r.bottom-32,r.right-8,r.bottom-8), NULL, Language.get("OK"), new BMessage(QUIT)) );
-	AddChild(new BButton(BRect(8,r.bottom-32,146,r.bottom-8), NULL, Language.get("FACTORY"), new BMessage(SET_FACTORY)) );
+	list->Select(0);
 
-	r = configBox->Bounds();
-	r.InsetBy(5,5); r.top += 10;
-	configBox->AddChild(new PrefGeneral(r));
+	float maxWidth = 0.0;
+	float width = 0.0;
+	for (int32 i = 0; i < list->CountItems(); i++) {
+		width = StringWidth(((BStringItem*)list->ItemAt(i))->Text());
+		if (width > maxWidth)
+			maxWidth = width;
+	}
+
+	configBox->AddChild(new PrefGeneral());
 	configBox->SetLabel(Language.get("GENERAL"));
+
+	BLayoutBuilder::Group<>(this)
+		.AddGroup(B_VERTICAL, B_USE_DEFAULT_SPACING)
+			.AddGroup(B_HORIZONTAL, B_USE_DEFAULT_SPACING)
+			.Add(sv)
+			.Add(configBox)
+			.End()
+			.AddGroup(B_HORIZONTAL, B_USE_DEFAULT_SPACING)
+					.Add(new BButton(NULL, Language.get("FACTORY"), new BMessage(SET_FACTORY)))
+					.AddGlue()
+					.Add(new BButton(NULL, Language.get("OK"), new BMessage(QUIT)))
+				.End()
+			.End()
+		.SetInsets(B_USE_WINDOW_SPACING)
+		.End();
+
+	sv->SetExplicitSize(
+		BSize(maxWidth * 1.3, B_SIZE_UNSET));
 }
 
 /*******************************************************
@@ -108,8 +123,6 @@ void PrefView::AttachedToWindow(){
 void PrefView::MessageReceived(BMessage *msg){
 	int32 i;
 	BView *tmpV = NULL;
-	BRect r = configBox->Bounds();
-	r.InsetBy(5,5); r.top += 10;
 
 	switch(msg->what){
 	case PREF_SELECT:
@@ -125,15 +138,15 @@ void PrefView::MessageReceived(BMessage *msg){
 
 		switch(i){
 		case 0:		// general
-			configBox->AddChild(new PrefGeneral(r));
+			configBox->AddChild(new PrefGeneral());
 			configBox->SetLabel(Language.get("GENERAL"));
 			break;
 		case 2:		// keys
-			configBox->AddChild(new PrefKeys(r));
+			configBox->AddChild(new PrefKeys());
 			configBox->SetLabel(Language.get("KEYBINDINGS"));
 			break;
 		case 1:		// colors
-			configBox->AddChild(new PrefColors(r));
+			configBox->AddChild(new PrefColors());
 			configBox->SetLabel(Language.get("COLORSET"));
 			break;
 		}

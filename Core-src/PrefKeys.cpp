@@ -27,6 +27,7 @@
 */
 
 #include <InterfaceKit.h>
+#include <LayoutBuilder.h>
 #include <StorageKit.h>
 #include <String.h>
 #include <StringItem.h>
@@ -576,18 +577,14 @@ void SetKeyWindow::MessageReceived(BMessage* msg){
 *   Setup the main view. Add in all the niffty components
 *   we have made and get things rolling
 *******************************************************/
-PrefKeys::PrefKeys(BRect frame):BView(frame, "Prefs keys", B_FOLLOW_ALL,0){
+PrefKeys::PrefKeys():BView("Prefs keys",0){
 	SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 
 	// add the prefs list at the left
-	BRect r = Bounds();
-	r.InsetBy(4,8);
-	r.right -= B_V_SCROLL_BAR_WIDTH;
-	list = new BOutlineListView(r,"key list");
-	BScrollView *sv = new BScrollView("scroll", list, B_FOLLOW_ALL_SIDES, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
+	list = new BOutlineListView("key list");
+	BScrollView *sv = new BScrollView("scroll", list, B_WILL_DRAW, false, true, B_PLAIN_BORDER);
 	sv->SetViewColor(ui_color(B_PANEL_BACKGROUND_COLOR));
 	sv->MakeFocus(false);
-	AddChild(sv);
 
 	BListItem *item = NULL;
 	for (int32 i=0; i<KeyBind.CountBindings(); i++){
@@ -600,6 +597,10 @@ PrefKeys::PrefKeys(BRect frame):BView(frame, "Prefs keys", B_FOLLOW_ALL,0){
 	}
 	if (item)	list->Collapse(item);
 	m_index = -1;
+	BLayoutBuilder::Group<>(this)
+		.AddGroup(B_VERTICAL, B_USE_DEFAULT_SPACING)
+			.SetInsets(B_USE_WINDOW_SPACING)
+			.Add(sv);
 }
 
 /*******************************************************

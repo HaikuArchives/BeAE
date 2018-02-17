@@ -36,7 +36,7 @@
 
 class PrefColors : public BView {
   public:
-	PrefColors(BRect);
+	PrefColors();
 	~PrefColors();
 	virtual void AttachedToWindow();
 	virtual void MessageReceived(BMessage*);
