@@ -33,7 +33,6 @@
 #include <AppKit.h>
 #include <InterfaceKit.h>
 #include <String.h>
-#include "SpinControl.h"
 #include "SpinSlider.h"
 
 class AnalyzeWindow : public BWindow {

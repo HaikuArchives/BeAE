@@ -26,12 +26,6 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// How long until this compiled ver expires
-// if they are all zero then never expire
-#define EXPIRES_D 17
-#define EXPIRES_M 5
-#define EXPIRES_Y 2002
-
 #include <Application.h>
 #include <Directory.h>
 #include <FindDirectory.h>
@@ -75,9 +69,6 @@ extern const char *APP_SIGNATURE;
 *   The Common pool is a group of all plugins/addons/functions
 *******************************************************/
 CommonPool::CommonPool(){
-	expired = Expired();
-
-	if (expired)	printf("expired !\n");
 
 	// To be save set them to nil 
 	importmenu = NULL;
@@ -106,10 +97,7 @@ CommonPool::CommonPool(){
 *   
 *******************************************************/
 void CommonPool::Init(){
-	if(expired){
-		(new BAlert(NULL,"This software has expired. Tool/Floaters will nolonger load. Please register.","Oh"))->Go();
-	}
-   
+
 //   thread_id tid = spawn_thread(_LoadFilters_, I_FILTER_LOADER, B_NORMAL_PRIORITY, (void *)this);
 //	if(tid < 0){
 //		debugger(THREAD_FAIL_MSG);
@@ -697,7 +685,6 @@ void CommonPool::LoadFilters()
 *******************************************************/
 /*
 status_t CommonPool::AddFilter(BEntry entry){
-	if(expired){ return B_ERROR; }
 
 	BPath path;
 	char name[B_FILE_NAME_LENGTH];
@@ -1111,57 +1098,3 @@ void CommonPool::BuildFilterMenu(BMenu *fmenu){
    }
 }
 */
-
-/*******************************************************
-*   
-*******************************************************/
-bool CommonPool::Expired(){
-
-/* This is now open source, no need for expiration date here.
-
-   if((EXPIRES_M == 0) && (EXPIRES_Y == 0) && (EXPIRES_D == 0)){ return false; }
-      
-   char Sm[4],Sd[3],Sy[5];
-   sscanf(__DATE__,"%s %s %s",Sm,Sd,Sy);
-   int32 d = atoi(Sd);
-   int32 y = atoi(Sy);
-   int32 m = -1;
-   if(strcmp(Sm,"Jan") == 0){
-      m = 0;
-   }else if(strcmp(Sm,"Feb") == 0){
-      m = 1;
-   }else if(strcmp(Sm,"Mar") == 0){
-      m = 2;
-   }else if(strcmp(Sm,"Apr") == 0){
-      m = 3;
-   }else if(strcmp(Sm,"May") == 0){
-      m = 4;
-   }else if(strcmp(Sm,"Jun") == 0){
-      m = 5;
-   }else if(strcmp(Sm,"Jul") == 0){
-      m = 6;
-   }else if(strcmp(Sm,"Aug") == 0){
-      m = 7;
-   }else if(strcmp(Sm,"Sep") == 0){
-      m = 8;
-   }else if(strcmp(Sm,"Oct") == 0){
-      m = 9;
-   }else if(strcmp(Sm,"Nov") == 0){
-      m = 10;
-   }else if(strcmp(Sm,"Dec") == 0){
-      m = 11;
-   }
-   
-   m = (m + EXPIRES_M) % 12;
-   y = (y + EXPIRES_Y);
-   d = (d + EXPIRES_D) % 30; // this could be smarter :p
-
-   time_t timer = time(NULL);
-   struct tm *now = localtime(&timer);
-
-   if(y <= (now->tm_year+1900)){ return true; }
-   if(m <= now->tm_mon){ return true; }
-   if(d  <= now->tm_mday){ return true; }
-*/   
-   return false; 
-}
