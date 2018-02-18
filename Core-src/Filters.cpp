@@ -412,6 +412,8 @@ void DoResample()
 {
 	if (Pool.sample_type == NONE)	return;
 
+	int32 preResample_type = Pool.sample_type;
+
 	float *buffer = (float*)malloc(BUFFER_SIZE*4+4);
 	if (!buffer)	return;	// error
 	
@@ -600,6 +602,11 @@ void DoResample()
 	Peak.Init( Pool.size+1, (Pool.sample_type == MONO) );	// Init peakfile
 	Pool.ResetIndexView();
 	Pool.UpdateToolBar();
+	if (Pool.sample_type != preResample_type)
+	{
+		Pool.update_draw_cache = true;
+		Pool.sample_view_dirty = true;
+	}
 	Pool.RedrawWindow();
 }
 

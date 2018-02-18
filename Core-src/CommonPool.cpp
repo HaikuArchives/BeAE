@@ -513,7 +513,12 @@ void CommonPool::SaveUndo()
 
 void CommonPool::Undo()
 {
+	int32 type = sample_type;
 	Hist.Restore();
+	if (type != sample_type) {
+		update_draw_cache = true;
+		sample_view_dirty = true;
+	}
 	Pool.ResetIndexView();
 	UpdateToolBar();
 	RedrawWindow();
