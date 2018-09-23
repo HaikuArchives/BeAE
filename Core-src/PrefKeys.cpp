@@ -105,15 +105,24 @@ void KeyItem::DrawItem(BView *view, BRect rect, bool all)
 	view->GetFont(&font);
 
 	if (m_id == -1){				// Draw the Outline
-		if (IsSelected())
-			view->SetLowColor(150,190,230);
-		else
-			view->SetLowColor(255,255,255);
+		rgb_color bgColor;
 
+		if (IsSelected())
+			bgColor = ui_color(B_LIST_SELECTED_BACKGROUND_COLOR);
+		else
+			bgColor = ui_color(B_LIST_BACKGROUND_COLOR);
+
+		view->SetHighColor(bgColor);
+		view->SetLowColor(bgColor);
 		view->FillRect(rect, B_SOLID_LOW);
-		view->SetHighColor(0,0,0);
+
+		if (IsSelected())
+			view->SetHighColor(ui_color(B_LIST_SELECTED_ITEM_TEXT_COLOR));
+		else
+			view->SetHighColor(ui_color(B_LIST_ITEM_TEXT_COLOR));
+
 		view->SetFont(be_bold_font);
-		view->DrawString( Text(), BPoint( rect.left +5, rect.top +font.Size() ));
+		view->DrawString( Text(), BPoint( rect.left +5, rect.top +font.Size() +3 ));
 		view->SetFont(&font);
 		return;
 	}
@@ -124,7 +133,14 @@ void KeyItem::DrawItem(BView *view, BRect rect, bool all)
 
 	view->SetHighColor(240,240,240);
 	view->StrokeLine( BPoint(rect.left, rect.bottom), BPoint(rect.right, rect.bottom));
-	view->SetHighColor(0,0,0);
+	if (IsSelected()) {
+		view->SetHighColor(ui_color(B_LIST_SELECTED_ITEM_TEXT_COLOR));
+		view->SetLowColor(ui_color(B_LIST_SELECTED_BACKGROUND_COLOR));
+	}
+	else {
+		view->SetHighColor(ui_color(B_LIST_ITEM_TEXT_COLOR));
+		view->SetLowColor(ui_color(B_LIST_BACKGROUND_COLOR));
+	}
 
 	float x = rect.left + rect.Width()/2 +(font.Size()+4)*3;	// max 3 combinations
 	DrawMods(view, BRect( x - font.Size() - 6, rect.top+1, x -4, rect.bottom-1), m_mod);
@@ -232,6 +248,8 @@ void KeyItem::DrawKey(BView *view, BRect r, const char *c)
 	BFont font;
 	view->GetFont(&font);
 
+	view->PushState();
+
 	view->SetHighColor(240,240,240);
 	view->StrokeLine( BPoint( r.left, r.top ), BPoint( r.right-1, r.top ));
 	view->StrokeLine( BPoint( r.left, r.top+1 ), BPoint( r.left, r.bottom ));
@@ -244,8 +262,8 @@ void KeyItem::DrawKey(BView *view, BRect r, const char *c)
 	view->SetHighColor(0,0,0);
 	view->SetLowColor(192,192,192);
 	view->DrawString(c, BPoint( (r.left+r.right)/2.0 - font.StringWidth(c)/2.0 +1, r.top+font.Size()-2) );
-	if (IsSelected())	view->SetLowColor(150,190,230);
-	else				view->SetLowColor(255,255,255);
+
+	view->PopState();
 }
 
 
