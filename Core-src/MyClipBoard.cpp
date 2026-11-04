@@ -400,7 +400,7 @@ void MyClipBoard::Paste(){
 		float *dst = (float*)(Pool.sample_memory+Pool.size*Pool.sample_type);
 		float *stop = (float*)(Pool.sample_memory+end*Pool.sample_type);
 		// copy forward
-		while (dst>stop){
+		while (dst > stop && old_size > 0){
 			*dst-- = *src--;
 		}
 		// now read the file
