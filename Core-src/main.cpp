@@ -191,6 +191,7 @@ void MyApplication::RefsReceived(BMessage *message)
 					
 					Pool.sample_memory = (float*)malloc(Pool.size * channels *4 +1024);
 #endif					
+					break;  // stop after audio track
 				}else{
 					inFile.ReleaseAllTracks();
 				}
