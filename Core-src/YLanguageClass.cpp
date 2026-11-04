@@ -280,7 +280,7 @@ BString YLanguageClass::ReadLine(BFile *file){
    BString line;
    char a;
    line.SetTo("");
-   while(file->Read((void*)&a,1) && (a != '\n')){
+   while((file->Read((void*)&a, 1) == 1) && (a != '\n')){
       line << a;
    } 
    return line;
