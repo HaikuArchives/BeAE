@@ -222,7 +222,7 @@ bool History::Restore(){
 {		HistoryFile->Read(&start,sizeof(start));
 		HistoryFile->Read(&end,sizeof(end));
 		HistoryFile->Read(&Pool.l_pointer,sizeof(Pool.l_pointer));
-		HistoryFile->Read(&Pool.r_pointer,sizeof(ool.r_pointer));
+		HistoryFile->Read(&Pool.r_pointer,sizeof(Pool.r_pointer));
 		Pool.pointer = start;
 		Pool.r_sel_pointer = end;
 		Pool.selection = BOTH;
