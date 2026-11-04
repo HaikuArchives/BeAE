@@ -349,6 +349,13 @@ void MyClipBoard::Paste(){
 		Pool.sample_bits = sample_bits;
 		Pool.size = 0;//size/(4*sample_type);
 		
+		Pool.m_format.type = B_MEDIA_RAW_AUDIO;
+		Pool.m_format.u.raw_audio.format = media_raw_audio_format::B_AUDIO_FLOAT;
+		Pool.m_format.u.raw_audio.frame_rate = frequency;
+		Pool.m_format.u.raw_audio.channel_count = sample_type;
+		Pool.m_format.u.raw_audio.byte_order = B_MEDIA_HOST_ENDIAN;
+		Pool.m_format. u.raw_audio.buffer_size = Prefs.buffer_size;
+
 		Pool.pointer = Pool.l_pointer = 0;
 		Pool.r_pointer = Pool.size;
 
