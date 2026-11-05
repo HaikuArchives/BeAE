@@ -68,7 +68,7 @@ void Preferences::Init(){
    } 
    
    // Get the language name
-	if(prefs.FindString("Language_Name",&lang_name) != B_OK)
+	if((prefs.FindString("Language_Name",&lang_name) != B_OK) || (lang_name.Length() == 0))
 		lang_name.SetTo("English");
    
    // Get the temp dir
