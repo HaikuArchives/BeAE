@@ -28,16 +28,12 @@
 
 #include <Application.h>
 #include <Entry.h>
-#include <Path.h>
 #include <File.h>
-#include <Volume.h>
+#include <Path.h>
 #include <String.h>
 #include <stdio.h>
-
-// Needed for malloc and friends with gcc4
-#if defined(__HAIKU__)
 #include <stdlib.h>
-#endif
+#include <Volume.h>
 
 #include "MyClipBoard.h"
 #include "CommonPool.h"
@@ -701,7 +697,7 @@ void MyClipBoard::Update(){
 	be_roster->GetAppList(info.signature, teams);	// get a list of all apps with the same signature
 	for (int i=0; i<teams->CountItems(); i++)
 	{
-		team_id who = (team_id)teams->ItemAt(i);
+		team_id who = (team_id)(addr_t)teams->ItemAt(i);
 		BMessenger app(NULL, who);
 		app.SendMessage(UPDATE_MENU);
 	}
