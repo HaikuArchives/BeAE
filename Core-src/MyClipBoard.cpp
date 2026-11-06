@@ -399,9 +399,9 @@ void MyClipBoard::Paste(){
 			goto einde;
 		}
 
-		float *src = (float*)(Pool.sample_memory+old_size*Pool.sample_type);
-		float *dst = (float*)(Pool.sample_memory+Pool.size*Pool.sample_type);
-		float *stop = (float*)(Pool.sample_memory+end*Pool.sample_type);
+		float *src = (float*)(Pool.sample_memory + old_size*Pool.sample_type) - 1;
+		float *dst = (float*)(Pool.sample_memory + Pool.size*Pool.sample_type) - 1;
+		float *stop = (float*)(Pool.sample_memory + (end + 1)*Pool.sample_type) - 1;
 		// copy forward
 		while (dst > stop && old_size > 0){
 			*dst-- = *src--;
