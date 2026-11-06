@@ -256,7 +256,7 @@ void ExecuteFilter(RealtimeFilter *pFilter)
 		Pool.HideProgress();
 		Pool.changed = true;
 		
-		delete filter_buffer;
+		delete[] filter_buffer;
 	}
 
 	// enable repeat action

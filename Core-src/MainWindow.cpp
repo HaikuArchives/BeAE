@@ -1025,7 +1025,7 @@ void MainWindow::MessageReceived(BMessage *message)
 		char *help = new char[strlen(path.Path())+1];
 		sprintf(help, path.Path());
 		be_roster->Launch("text/html",1, &help);
-		delete help;
+		delete[] help;
 }		break;
 		
 	case NEW:
@@ -1052,7 +1052,7 @@ void MainWindow::MessageReceived(BMessage *message)
 		char *history = new char[strlen(path.Path())+1];
 		sprintf(history, path.Path());
 		be_roster->Launch("text/html",1, &history);
-		delete history;
+		delete[] history;
 }		break;
 		
 	case HOMEPAGE:

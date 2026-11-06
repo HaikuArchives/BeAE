@@ -172,7 +172,7 @@ bool MyClipBoard::Copy(){
 				}
 			}
 
-			delete buffer;
+			delete[] buffer;
 			Pool.HideProgress();
 		}
 	}else{							//============================ Mono + Both
@@ -449,7 +449,7 @@ void MyClipBoard::Paste(){
 					*p++ = (right+left)/2;
 				}
 			}
-			delete buffer;
+			delete[] buffer;
 			Pool.HideProgress();
 		}else if (Pool.sample_type == STEREO && sample_type == MONO){
 			Pool.StartProgress(Language.get("PASTE_STEREO"), size);
@@ -472,7 +472,7 @@ void MyClipBoard::Paste(){
 					*p++ = left;
 				}
 			}
-			delete buffer;
+			delete[] buffer;
 			Pool.HideProgress();
 		}
 		Pool.pointer = start;
@@ -553,7 +553,7 @@ void MyClipBoard::Paste(){
 						p += 2;
 					}
 				}
-				delete buffer;
+				delete[] buffer;
 				Pool.HideProgress();
 			}else if (sample_type == STEREO){
 				Pool.StartProgress(Language.get("PASTE_STEREO"), size);
@@ -579,7 +579,7 @@ void MyClipBoard::Paste(){
 						p += 2;
 					}
 				}
-				delete buffer;
+				delete[] buffer;
 				Pool.HideProgress();
 			}
 		}
