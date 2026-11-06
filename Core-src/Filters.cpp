@@ -311,8 +311,8 @@ InvertFilter::InvertFilter() : RealtimeFilter(NULL, false)
 void InvertFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		buffer++;
 		*buffer = -*buffer;
+		buffer++;
 	}
 }
 
