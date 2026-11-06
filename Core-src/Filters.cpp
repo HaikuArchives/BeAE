@@ -256,7 +256,7 @@ void ExecuteFilter(RealtimeFilter *pFilter)
 		Pool.HideProgress();
 		Pool.changed = true;
 		
-		delete filter_buffer;
+		delete[] filter_buffer;
 	}
 
 	// enable repeat action
@@ -311,8 +311,8 @@ InvertFilter::InvertFilter() : RealtimeFilter(NULL, false)
 void InvertFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		buffer++;
 		*buffer = -*buffer;
+		buffer++;
 	}
 }
 
@@ -334,8 +334,8 @@ FadeInFilter::FadeInFilter() : RealtimeFilter(NULL, false)
 void FadeInFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		buffer++;
 		*buffer = (*buffer)*count / m_total;
+		buffer++;
 		count++;
 	}
 }
@@ -354,8 +354,8 @@ FadeOutFilter::FadeOutFilter() : RealtimeFilter(NULL, false)
 void FadeOutFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
-		buffer++;
 		*buffer = (*buffer)*count / m_total;
+		buffer++;
 		count--;
 	}
 }
