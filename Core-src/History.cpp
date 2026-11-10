@@ -121,24 +121,24 @@ bool History::Save(uint32 action, uint32 start, uint32 end){
 	
 	switch(action){
 	case H_PASTE:
-		HistoryFile->Write(&action,sizeof(&action));
-		HistoryFile->Write(&start,sizeof(&start));
-		HistoryFile->Write(&end,sizeof(&end));
-		HistoryFile->Write(&Pool.l_pointer,sizeof(&Pool.l_pointer));
-		HistoryFile->Write(&Pool.r_pointer,sizeof(&Pool.r_pointer));
+		HistoryFile->Write(&action,sizeof(action));
+		HistoryFile->Write(&start,sizeof(start));
+		HistoryFile->Write(&end,sizeof(end));
+		HistoryFile->Write(&Pool.l_pointer,sizeof(Pool.l_pointer));
+		HistoryFile->Write(&Pool.r_pointer,sizeof(Pool.r_pointer));
 		break;
 	case H_FULL:
-		HistoryFile->Write(&action,sizeof(&action));
-		HistoryFile->Write(&Pool.selection,sizeof(&Pool.selection));
-		HistoryFile->Write(&end,sizeof(&end));
-		HistoryFile->Write(&Pool.pointer,sizeof(&Pool.pointer));
-		HistoryFile->Write(&Pool.l_pointer,sizeof(&Pool.l_pointer));
-		HistoryFile->Write(&Pool.r_pointer,sizeof(&Pool.r_pointer));
-		HistoryFile->Write(&Pool.r_sel_pointer,sizeof(&Pool.r_sel_pointer));	// needed for cut
-		HistoryFile->Write(&Pool.sample_bits,sizeof(&Pool.sample_bits));
-		HistoryFile->Write(&Pool.frequency,sizeof(&Pool.frequency));
-		HistoryFile->Write(&Pool.sample_type,sizeof(&Pool.sample_type));
-		HistoryFile->Write(&Pool.m_format,sizeof(&Pool.m_format));
+		HistoryFile->Write(&action,sizeof(action));
+		HistoryFile->Write(&Pool.selection,sizeof(Pool.selection));
+		HistoryFile->Write(&end,sizeof(end));
+		HistoryFile->Write(&Pool.pointer,sizeof(Pool.pointer));
+		HistoryFile->Write(&Pool.l_pointer,sizeof(Pool.l_pointer));
+		HistoryFile->Write(&Pool.r_pointer,sizeof(Pool.r_pointer));
+		HistoryFile->Write(&Pool.r_sel_pointer,sizeof(Pool.r_sel_pointer));	// needed for cut
+		HistoryFile->Write(&Pool.sample_bits,sizeof(Pool.sample_bits));
+		HistoryFile->Write(&Pool.frequency,sizeof(Pool.frequency));
+		HistoryFile->Write(&Pool.sample_type,sizeof(Pool.sample_type));
+		HistoryFile->Write(&Pool.m_format,sizeof(Pool.m_format));
 
 		if (size < BLOCK_SIZE*4){					// files smaller than 256Kb without progressBar
 			HistoryFile->Write((void*)(Pool.sample_memory), size);
@@ -158,14 +158,14 @@ bool History::Save(uint32 action, uint32 start, uint32 end){
 		break;
 	case H_REPLACE:			// just 1:1, like undo for a filter
 	case H_DELETE:			// for cut, need an insert actio to restore
-		HistoryFile->Write(&action,sizeof(&action));
-		HistoryFile->Write(&Pool.selection,sizeof(&Pool.selection));
-		HistoryFile->Write(&start,sizeof(&start));
-		HistoryFile->Write(&end,sizeof(&end));
-		HistoryFile->Write(&Pool.r_sel_pointer,sizeof(&Pool.r_sel_pointer));	// needed for cut
-		HistoryFile->Write(&Pool.r_pointer,sizeof(&Pool.r_pointer));
-		HistoryFile->Write(&Pool.l_pointer,sizeof(&Pool.l_pointer));
-		HistoryFile->Write(&Pool.pointer,sizeof(&Pool.pointer));
+		HistoryFile->Write(&action,sizeof(action));
+		HistoryFile->Write(&Pool.selection,sizeof(Pool.selection));
+		HistoryFile->Write(&start,sizeof(start));
+		HistoryFile->Write(&end,sizeof(end));
+		HistoryFile->Write(&Pool.r_sel_pointer,sizeof(Pool.r_sel_pointer));	// needed for cut
+		HistoryFile->Write(&Pool.r_pointer,sizeof(Pool.r_pointer));
+		HistoryFile->Write(&Pool.l_pointer,sizeof(Pool.l_pointer));
+		HistoryFile->Write(&Pool.pointer,sizeof(Pool.pointer));
 		if (size < BLOCK_SIZE*4){					// files smaller than 256Kb without progressBar
 			HistoryFile->Write((void*)(Pool.sample_memory+start*Pool.sample_type), size);
 		}else{
@@ -203,26 +203,26 @@ bool History::Restore(){
 
 	uint32 action;
 	HistoryFile->Seek(0, SEEK_SET);
-	HistoryFile->Read(&action,sizeof(&action));
+	HistoryFile->Read(&action,sizeof(action));
 
 	uint32 start, end, size=0;
 
 	if (action == H_DELETE || action == H_REPLACE){
-		HistoryFile->Read(&Pool.selection,sizeof(&Pool.selection));
-		HistoryFile->Read(&start,sizeof(&start));
-		HistoryFile->Read(&end,sizeof(&end));
-		HistoryFile->Read(&Pool.r_sel_pointer,sizeof(&Pool.r_sel_pointer));
-		HistoryFile->Read(&Pool.r_pointer,sizeof(&Pool.r_pointer));
-		HistoryFile->Read(&Pool.l_pointer,sizeof(&Pool.l_pointer));
-		HistoryFile->Read(&Pool.pointer,sizeof(&Pool.pointer));
+		HistoryFile->Read(&Pool.selection,sizeof(Pool.selection));
+		HistoryFile->Read(&start,sizeof(start));
+		HistoryFile->Read(&end,sizeof(end));
+		HistoryFile->Read(&Pool.r_sel_pointer,sizeof(Pool.r_sel_pointer));
+		HistoryFile->Read(&Pool.r_pointer,sizeof(Pool.r_pointer));
+		HistoryFile->Read(&Pool.l_pointer,sizeof(Pool.l_pointer));
+		HistoryFile->Read(&Pool.pointer,sizeof(Pool.pointer));
 	}
 
 	switch(action){
 	case H_PASTE:
-{		HistoryFile->Read(&start,sizeof(&start));
-		HistoryFile->Read(&end,sizeof(&end));
-		HistoryFile->Read(&Pool.l_pointer,sizeof(&Pool.l_pointer));
-		HistoryFile->Read(&Pool.r_pointer,sizeof(&Pool.r_pointer));
+{		HistoryFile->Read(&start,sizeof(start));
+		HistoryFile->Read(&end,sizeof(end));
+		HistoryFile->Read(&Pool.l_pointer,sizeof(Pool.l_pointer));
+		HistoryFile->Read(&Pool.r_pointer,sizeof(Pool.r_pointer));
 		Pool.pointer = start;
 		Pool.r_sel_pointer = end;
 		Pool.selection = BOTH;
@@ -277,16 +277,16 @@ bool History::Restore(){
 		}
 		break;
 	case H_FULL:
-		HistoryFile->Read(&Pool.selection,sizeof(&Pool.selection));
-		HistoryFile->Read(&end,sizeof(&end));
-		HistoryFile->Read(&Pool.pointer,sizeof(&Pool.pointer));
-		HistoryFile->Read(&Pool.l_pointer,sizeof(&Pool.l_pointer));
-		HistoryFile->Read(&Pool.r_pointer,sizeof(&Pool.r_pointer));
-		HistoryFile->Read(&Pool.r_sel_pointer,sizeof(&Pool.r_sel_pointer));
-		HistoryFile->Read(&Pool.sample_bits,sizeof(&Pool.sample_bits));
-		HistoryFile->Read(&Pool.frequency,sizeof(&Pool.frequency));
-		HistoryFile->Read(&Pool.sample_type,sizeof(&Pool.sample_type));
-		HistoryFile->Read(&Pool.m_format,sizeof(&Pool.m_format));
+		HistoryFile->Read(&Pool.selection,sizeof(Pool.selection));
+		HistoryFile->Read(&end,sizeof(end));
+		HistoryFile->Read(&Pool.pointer,sizeof(Pool.pointer));
+		HistoryFile->Read(&Pool.l_pointer,sizeof(Pool.l_pointer));
+		HistoryFile->Read(&Pool.r_pointer,sizeof(Pool.r_pointer));
+		HistoryFile->Read(&Pool.r_sel_pointer,sizeof(Pool.r_sel_pointer));
+		HistoryFile->Read(&Pool.sample_bits,sizeof(Pool.sample_bits));
+		HistoryFile->Read(&Pool.frequency,sizeof(Pool.frequency));
+		HistoryFile->Read(&Pool.sample_type,sizeof(Pool.sample_type));
+		HistoryFile->Read(&Pool.m_format,sizeof(Pool.m_format));
 
 		size = (end+1)*4*Pool.sample_type;
 		Pool.size = end;

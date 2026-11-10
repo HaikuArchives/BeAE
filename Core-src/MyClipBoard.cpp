@@ -28,16 +28,12 @@
 
 #include <Application.h>
 #include <Entry.h>
-#include <Path.h>
 #include <File.h>
-#include <Volume.h>
+#include <Path.h>
 #include <String.h>
 #include <stdio.h>
-
-// Needed for malloc and friends with gcc4
-#if defined(__HAIKU__)
 #include <stdlib.h>
-#endif
+#include <Volume.h>
 
 #include "MyClipBoard.h"
 #include "CommonPool.h"
@@ -87,7 +83,7 @@ void MyClipBoard::Init()
 
 	if (!m_clip){		// make sure the clip is invalid
 		MyClipBoardFile->Seek(0, SEEK_SET);
-		MyClipBoardFile->Write(&m_clip,sizeof(&m_clip));
+		MyClipBoardFile->Write(&m_clip,sizeof(m_clip));
 	}
    
 	if((clipSem = create_sem(1, "MyClipBoard Sem")) < 0){
@@ -137,12 +133,12 @@ bool MyClipBoard::Copy(){
 	MyClipBoardFile->Seek(0, SEEK_SET);
 
 	m_clip = true;
-	MyClipBoardFile->Write(&m_clip,sizeof(&m_clip));		// is clip valid ?
+	MyClipBoardFile->Write(&m_clip,sizeof(m_clip));		// is clip valid ?
 
-	MyClipBoardFile->Write(&size,sizeof(&size));
-	MyClipBoardFile->Write(&sample_type,sizeof(&sample_type));
-	MyClipBoardFile->Write(&Pool.frequency,sizeof(&Pool.frequency));
-	MyClipBoardFile->Write(&Pool.sample_bits,sizeof(&Pool.sample_bits));
+	MyClipBoardFile->Write(&size,sizeof(size));
+	MyClipBoardFile->Write(&sample_type,sizeof(sample_type));
+	MyClipBoardFile->Write(&Pool.frequency,sizeof(Pool.frequency));
+	MyClipBoardFile->Write(&Pool.sample_bits,sizeof(Pool.sample_bits));
 
 
 	if (Pool.sample_type==STEREO && Pool.selection!=BOTH){
@@ -176,7 +172,7 @@ bool MyClipBoard::Copy(){
 				}
 			}
 
-			delete buffer;
+			delete[] buffer;
 			Pool.HideProgress();
 		}
 	}else{							//============================ Mono + Both
@@ -331,14 +327,14 @@ void MyClipBoard::Paste(){
 	int32 sample_type, sample_bits;
 	float frequency;
 	
-	MyClipBoardFile->Read(&m_clip,sizeof(&m_clip));
+	MyClipBoardFile->Read(&m_clip,sizeof(m_clip));
 	if (!m_clip)	return;
 
 	Pool.mainWindow->PostMessage(TRANSPORT_STOP);		// can not use playing here
-	MyClipBoardFile->Read(&size,sizeof(&size));
-	MyClipBoardFile->Read(&sample_type,sizeof(&sample_type));
-	MyClipBoardFile->Read(&frequency,sizeof(&frequency));
-	MyClipBoardFile->Read(&sample_bits,sizeof(&Pool.sample_bits));
+	MyClipBoardFile->Read(&size,sizeof(size));
+	MyClipBoardFile->Read(&sample_type,sizeof(sample_type));
+	MyClipBoardFile->Read(&frequency,sizeof(frequency));
+	MyClipBoardFile->Read(&sample_bits,sizeof(sample_bits));
 
 	// enable paste in empty instance
 	if (Pool.size == 0)
@@ -349,6 +345,13 @@ void MyClipBoard::Paste(){
 		Pool.sample_bits = sample_bits;
 		Pool.size = 0;//size/(4*sample_type);
 		
+		Pool.m_format.type = B_MEDIA_RAW_AUDIO;
+		Pool.m_format.u.raw_audio.format = media_raw_audio_format::B_AUDIO_FLOAT;
+		Pool.m_format.u.raw_audio.frame_rate = frequency;
+		Pool.m_format.u.raw_audio.channel_count = sample_type;
+		Pool.m_format.u.raw_audio.byte_order = B_MEDIA_HOST_ENDIAN;
+		Pool.m_format.u.raw_audio.buffer_size = Prefs.buffer_size;
+
 		Pool.pointer = Pool.l_pointer = 0;
 		Pool.r_pointer = Pool.size;
 
@@ -396,11 +399,11 @@ void MyClipBoard::Paste(){
 			goto einde;
 		}
 
-		float *src = (float*)(Pool.sample_memory+old_size*Pool.sample_type);
-		float *dst = (float*)(Pool.sample_memory+Pool.size*Pool.sample_type);
-		float *stop = (float*)(Pool.sample_memory+end*Pool.sample_type);
+		float *src = (float*)(Pool.sample_memory + old_size*Pool.sample_type) - 1;
+		float *dst = (float*)(Pool.sample_memory + Pool.size*Pool.sample_type) - 1;
+		float *stop = (float*)(Pool.sample_memory + (end + 1)*Pool.sample_type) - 1;
 		// copy forward
-		while (dst>stop){
+		while (dst > stop && old_size > 0){
 			*dst-- = *src--;
 		}
 		// now read the file
@@ -441,12 +444,12 @@ void MyClipBoard::Paste(){
 			}
 			if (size){
 				for (int32 i=0; i<size; i+=8){
-					MyClipBoardFile->Read(&left, sizeof(&left));
-					MyClipBoardFile->Read(&right, sizeof(&right));
+					MyClipBoardFile->Read(&left, sizeof(left));
+					MyClipBoardFile->Read(&right, sizeof(right));
 					*p++ = (right+left)/2;
 				}
 			}
-			delete buffer;
+			delete[] buffer;
 			Pool.HideProgress();
 		}else if (Pool.sample_type == STEREO && sample_type == MONO){
 			Pool.StartProgress(Language.get("PASTE_STEREO"), size);
@@ -464,12 +467,12 @@ void MyClipBoard::Paste(){
 			}
 			if (size){
 				for (int32 i=0; i<size; i+=4){
-					MyClipBoardFile->Read(&left, sizeof(&left));
+					MyClipBoardFile->Read(&left, sizeof(left));
 					*p++ = left;
 					*p++ = left;
 				}
 			}
-			delete buffer;
+			delete[] buffer;
 			Pool.HideProgress();
 		}
 		Pool.pointer = start;
@@ -545,12 +548,12 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=4){
-						MyClipBoardFile->Read(&left, sizeof(&left));
+						MyClipBoardFile->Read(&left, sizeof(left));
 						*p = left;
 						p += 2;
 					}
 				}
-				delete buffer;
+				delete[] buffer;
 				Pool.HideProgress();
 			}else if (sample_type == STEREO){
 				Pool.StartProgress(Language.get("PASTE_STEREO"), size);
@@ -570,13 +573,13 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=8){
-						MyClipBoardFile->Read(&left, sizeof(&left));
-						MyClipBoardFile->Read(&right, sizeof(&right));
+						MyClipBoardFile->Read(&left, sizeof(left));
+						MyClipBoardFile->Read(&right, sizeof(right));
 						*p = (right+left)/2;
 						p += 2;
 					}
 				}
-				delete buffer;
+				delete[] buffer;
 				Pool.HideProgress();
 			}
 		}
@@ -599,7 +602,7 @@ void MyClipBoard::Paste(){
 				float left;
 				while(size>=BLOCK_SIZE2){
 					for (int32 i=0; i<BLOCK_SIZE2; i+=4){
-						MyClipBoardFile->Read(&left, sizeof(&left));
+						MyClipBoardFile->Read(&left, sizeof(left));
 						*p = left;
 						p += 2;
 					}
@@ -608,7 +611,7 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=4){
-						MyClipBoardFile->Read(&left, sizeof(&left));
+						MyClipBoardFile->Read(&left, sizeof(left));
 						*p = left;
 						p += 2;
 					}
@@ -620,8 +623,8 @@ void MyClipBoard::Paste(){
 				float left, right;
 				while(size>=BLOCK_SIZE2){
 					for (int32 i=0; i<BLOCK_SIZE2; i+=8){
-						MyClipBoardFile->Read(&left, sizeof(&left));
-						MyClipBoardFile->Read(&right, sizeof(&right));
+						MyClipBoardFile->Read(&left, sizeof(left));
+						MyClipBoardFile->Read(&right, sizeof(right));
 						*p = (right+left)/2;
 						p += 2;
 					}
@@ -630,8 +633,8 @@ void MyClipBoard::Paste(){
 				}
 				if (size){
 					for (int32 i=0; i<size; i+=8){
-						MyClipBoardFile->Read(&left, sizeof(&left));
-						MyClipBoardFile->Read(&right, sizeof(&right));
+						MyClipBoardFile->Read(&left, sizeof(left));
+						MyClipBoardFile->Read(&right, sizeof(right));
 						*p = (right+left)/2;
 						p += 2;
 					}
@@ -669,7 +672,7 @@ void MyClipBoard::PasteMix(){
 *******************************************************/
 bool MyClipBoard::HasClip(){
 	MyClipBoardFile->Seek(0, SEEK_SET);
-	MyClipBoardFile->Read(&m_clip,sizeof(&m_clip));
+	MyClipBoardFile->Read(&m_clip,sizeof(m_clip));
 
 	return m_clip;
 }
@@ -680,7 +683,7 @@ bool MyClipBoard::HasClip(){
 void MyClipBoard::Reset(){
 	m_clip = false;
 	MyClipBoardFile->Seek(0, SEEK_SET);
-	MyClipBoardFile->Write(&m_clip,sizeof(&m_clip));
+	MyClipBoardFile->Write(&m_clip,sizeof(m_clip));
 }
 
 /*******************************************************
@@ -694,7 +697,7 @@ void MyClipBoard::Update(){
 	be_roster->GetAppList(info.signature, teams);	// get a list of all apps with the same signature
 	for (int i=0; i<teams->CountItems(); i++)
 	{
-		team_id who = (team_id)teams->ItemAt(i);
+		team_id who = (team_id)(addr_t)teams->ItemAt(i);
 		BMessenger app(NULL, who);
 		app.SendMessage(UPDATE_MENU);
 	}
