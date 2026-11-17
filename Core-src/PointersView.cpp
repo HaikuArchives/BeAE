@@ -82,6 +82,7 @@ void EntryView::SetPointer( int64 p)
 		float minutes = floor(seconds / 60);
 		seconds -= minutes*60;
 
+		// strtoll: sample counts need 64 bits (the old code used %Ld with scanf)
 		sprintf(s, "%d:%d.%d", (int)minutes, (int)seconds, (int)time);
 	}
 	SetText(s);

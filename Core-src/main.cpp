@@ -191,7 +191,7 @@ void MyApplication::RefsReceived(BMessage *message)
 					
 					Pool.sample_memory = (float*)malloc(Pool.size * channels *4 +1024);
 #endif					
-					break;  // stop after audio track
+					break;  // stop here: later tracks (cover art) would overwrite the format and free this track
 				}else{
 					inFile.ReleaseAllTracks();
 				}

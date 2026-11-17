@@ -344,7 +344,8 @@ void MyClipBoard::Paste(){
 		Pool.selection = NONE;
 		Pool.sample_bits = sample_bits;
 		Pool.size = 0;//size/(4*sample_type);
-		
+
+		// no file was loaded yet, so set the format Save() relies on
 		Pool.m_format.type = B_MEDIA_RAW_AUDIO;
 		Pool.m_format.u.raw_audio.format = media_raw_audio_format::B_AUDIO_FLOAT;
 		Pool.m_format.u.raw_audio.frame_rate = frequency;
@@ -399,16 +400,19 @@ void MyClipBoard::Paste(){
 			goto einde;
 		}
 
+		// copy backwards from the last float (the -1) so the move can overlap itself
 		float *src = (float*)(Pool.sample_memory + old_size*Pool.sample_type) - 1;
 		float *dst = (float*)(Pool.sample_memory + Pool.size*Pool.sample_type) - 1;
+		// stop is the float just before the first one to move; sample_type is the channel count
 		float *stop = (float*)(Pool.sample_memory + (end + 1)*Pool.sample_type) - 1;
 		// copy forward
+		// old_size == 0 means pasting into empty file, there is nothing to move
 		while (dst > stop && old_size > 0){
 			*dst-- = *src--;
 		}
 		// now read the file
-	
-//		size = (end-start+1)*4*Pool.sample_type;
+
+		// size = (end-start+1)*4*Pool.sample_type;
 		if (sample_type == Pool.sample_type){			// 1:1
 			if (size < BLOCK_SIZE*4){					// files smaller than 256Kb without progressBar
 				MyClipBoardFile->Read((void*)(Pool.sample_memory+start*Pool.sample_type), size);
@@ -697,6 +701,7 @@ void MyClipBoard::Update(){
 	be_roster->GetAppList(info.signature, teams);	// get a list of all apps with the same signature
 	for (int i=0; i<teams->CountItems(); i++)
 	{
+		// ItemAt() returns a pointer; go through addr_t so the cast is safe on 64-bit
 		team_id who = (team_id)(addr_t)teams->ItemAt(i);
 		BMessenger app(NULL, who);
 		app.SendMessage(UPDATE_MENU);

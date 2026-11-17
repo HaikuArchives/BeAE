@@ -311,6 +311,7 @@ InvertFilter::InvertFilter() : RealtimeFilter(NULL, false)
 void InvertFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
+		// negate, then advance: advancing first would write one float past the buffer
 		*buffer = -*buffer;
 		buffer++;
 	}
@@ -334,6 +335,7 @@ FadeInFilter::FadeInFilter() : RealtimeFilter(NULL, false)
 void FadeInFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
+		// use the value, then advance: count carries over between blocks
 		*buffer = (*buffer)*count / m_total;
 		buffer++;
 		count++;
@@ -343,6 +345,7 @@ void FadeInFilter::FilterBuffer(float *buffer, size_t size)
 bool FadeInFilter::InitFilter(float f, int32 c, int32 pass, int32 size)
 {
 	RealtimeFilter::InitFilter(f, c, pass, size);
+	// reset once per pass; FilterBuffer() runs per block and count must carry over
 	count = 0;
 	return true;
 }
@@ -354,6 +357,7 @@ FadeOutFilter::FadeOutFilter() : RealtimeFilter(NULL, false)
 void FadeOutFilter::FilterBuffer(float *buffer, size_t size)
 {
 	for (size_t i=0; i<size; i++){
+		// use the value, then advance: count carries over between blocks
 		*buffer = (*buffer)*count / m_total;
 		buffer++;
 		count--;
@@ -363,6 +367,7 @@ void FadeOutFilter::FilterBuffer(float *buffer, size_t size)
 bool FadeOutFilter::InitFilter(float f, int32 c, int32 pass, int32 size)
 {
 	RealtimeFilter::InitFilter(f, c, pass, size);
+	// start at the whole selection size (floats), not the block size
 	count = size;
 	return true;
 }
