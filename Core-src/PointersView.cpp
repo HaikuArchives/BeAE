@@ -82,7 +82,6 @@ void EntryView::SetPointer( int64 p)
 		float minutes = floor(seconds / 60);
 		seconds -= minutes*60;
 
-		// strtoll: sample counts need 64 bits (the old code used %Ld with scanf)
 		sprintf(s, "%d:%d.%d", (int)minutes, (int)seconds, (int)time);
 	}
 	SetText(s);
@@ -93,6 +92,7 @@ void EntryView::ConvertToPointer()
 	int64 p = 0;
 	// create text
 	if (Prefs.display_time == DISPLAY_SAMPLES){
+		// strtoll: sample counts are 64-bit, which scanf's %d can't hold
 		p = strtoll(Text(), NULL, 10);
 	} else
 	if (Prefs.display_time == DISPLAY_TIME){
